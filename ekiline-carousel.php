@@ -66,18 +66,21 @@ add_action( 'init', 'ekiline_blocks_ekiline_carousel_block_init' );
  * Funcion php para muestreo en front
  */
 function gutenberg_examples_dynamic_render_callback( $block_attributes, $content ) {
-    $recent_posts = wp_get_recent_posts( array(
-        'numberposts' => 1,
-        'post_status' => 'publish',
-    ) );
-    if ( count( $recent_posts ) === 0 ) {
-        return 'No posts';
-    }
-    $post = $recent_posts[ 0 ];
-    $post_id = $post['ID'];
-    return sprintf(
-        '<a class="wp-block-my-plugin-latest-post" href="%1$s">%2$s</a>',
-        esc_url( get_permalink( $post_id ) ),
-        esc_html( get_the_title( $post_id ) )
-    );
+    // $recent_posts = wp_get_recent_posts( array(
+    //     'numberposts' => 1,
+    //     'post_status' => 'publish',
+    // ) );
+    // if ( count( $recent_posts ) === 0 ) {
+    //     return 'No posts';
+    // }
+    // $post = $recent_posts[ 0 ];
+    // $post_id = $post['ID'];
+    // return sprintf(
+    //     '<a class="wp-block-my-plugin-latest-post" href="%1$s">%2$s</a>',
+    //     esc_url( get_permalink( $post_id ) ),
+    //     esc_html( get_the_title( $post_id ) )
+	// );
+
+	$carousel = do_shortcode('[ekiline-carousel type="images" id="611,1045,49,50,52,51"]');
+	return $carousel;
 }

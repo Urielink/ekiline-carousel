@@ -14,6 +14,13 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps } from '@wordpress/block-editor';
 
 /**
+ * Auxiliar, visualizar con php.
+ * https://developer.wordpress.org/block-editor/tutorials/block-tutorial/creating-dynamic-blocks/
+ */
+import ServerSideRender from '@wordpress/server-side-render';
+
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
  *
@@ -30,12 +37,15 @@ import './editor.scss';
  * @return {WPElement} Element to render.
  */
 export default function Edit() {
+	const props = '',
+	blockProps = useBlockProps();
+
 	return (
-		<p { ...useBlockProps() }>
-			{ __(
-				'Ekiline Carousel – hello from the editor!',
-				'ekiline-carousel'
-			) }
-		</p>
+		<div {...blockProps}>
+			<ServerSideRender
+				block="ekiline-blocks/ekiline-carousel"
+				attributes={ props.attributes }
+			/>
+		</div>
 	);
 }

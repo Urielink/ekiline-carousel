@@ -170,6 +170,87 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/edit.js":
+/*!*********************!*\
+  !*** ./src/edit.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edit; });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_4__);
+
+
+/**
+ * Retrieves the translation of text.
+ *
+ * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ */
+
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ */
+
+
+/**
+ * Auxiliar, visualizar con php.
+ * https://developer.wordpress.org/block-editor/tutorials/block-tutorial/creating-dynamic-blocks/
+ */
+
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+
+
+/**
+ * The edit function describes the structure of your block in the context of the
+ * editor. This represents what the editor will render when the block is used.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ *
+ * @return {WPElement} Element to render.
+ */
+
+function Edit() {
+  var props = '',
+      blockProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])();
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default.a, {
+    block: "ekiline-blocks/ekiline-carousel",
+    attributes: props.attributes
+  }));
+}
+
+/***/ }),
+
+/***/ "./src/editor.scss":
+/*!*************************!*\
+  !*** ./src/editor.scss ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -179,33 +260,18 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_5__);
-
-
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-
-/**
- * clases auxiliares
- */
-// import { withSelect } from '@wordpress/data'; //renderiza con js
-
- // renderiza con php
-
 
 /**
  * Retrieves the translation of text.
@@ -226,8 +292,8 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Internal dependencies
  */
-// import Edit from './edit';
-// import save from './save';
+
+ // import save from './save';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -235,7 +301,7 @@ __webpack_require__.r(__webpack_exports__);
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('ekiline-blocks/ekiline-carousel', {
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('ekiline-blocks/ekiline-carousel', {
   /**
    * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
    */
@@ -245,13 +311,13 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('eki
    * This is the display title for your block, which can be translated with `i18n` functions.
    * The block inserter will show this name.
    */
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Ekiline Carousel', 'ekiline-carousel'),
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Ekiline Carousel', 'ekiline-carousel'),
 
   /**
    * This is a short description for your block, can be translated with `i18n` functions.
    * It will be shown in the Block Tab in the Settings Sidebar.
    */
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Aqui va la descripcion del plugin', 'ekiline-carousel'),
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Aqui va la descripcion del plugin', 'ekiline-carousel'),
 
   /**
    * Blocks are grouped into categories to help users browse and discover them.
@@ -276,40 +342,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('eki
   /**
    * @see ./edit.js
    */
-  // edit: Edit,
-
-  /**
-   * Esta opcion renderiza el bloque con marcado js
-   */
-  // edit: withSelect( ( select ) => {
-  //     return {
-  //         posts: select( 'core' ).getEntityRecords( 'postType', 'post' ),
-  //     };
-  // } )( ( { posts } ) => {
-  //     const blockProps = useBlockProps();
-  //     return (
-  //         <div { ...blockProps }>
-  //             { ! posts && 'Loading' }
-  //             { posts && posts.length === 0 && 'No Posts' }
-  //             { posts && posts.length > 0 && (
-  //                 <a href={ posts[ 0 ].link }>
-  //                     { posts[ 0 ].title.rendered }
-  //                 </a>
-  //             ) }
-  //         </div>
-  //     )
-  // } ),
-
-  /**
-   * Esta opcion ocupa el callback
-   */
-  edit: function edit(props) {
-    var blockProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"])();
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default.a, {
-      block: "ekiline-blocks/ekiline-carousel",
-      attributes: props.attributes
-    }));
-  }
+  edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"]
   /**
    * @see ./save.js
    */
@@ -321,7 +354,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('eki
  */
 
 
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockCollection"])('ekiline-blocks', {
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockCollection"])('ekiline-blocks', {
   title: 'Ekiline blocks',
   icon: 'layout'
 });
