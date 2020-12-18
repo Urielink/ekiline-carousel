@@ -36,26 +36,48 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 	);
 	wp_set_script_translations( 'ekiline-blocks-ekiline-carousel-block-editor', 'ekiline-carousel' );
 
-	$editor_css = 'build/index.css';
-	wp_register_style(
-		'ekiline-blocks-ekiline-carousel-block-editor',
-		plugins_url( $editor_css, __FILE__ ),
-		array(),
-		filemtime( "$dir/$editor_css" )
-	);
+	// $editor_css = 'build/index.css';
+	// wp_register_style(
+	// 	'ekiline-blocks-ekiline-carousel-block-editor',
+	// 	plugins_url( $editor_css, __FILE__ ),
+	// 	array(),
+	// 	filemtime( "$dir/$editor_css" )
+	// );
 
-	$style_css = 'build/style-index.css';
-	wp_register_style(
-		'ekiline-blocks-ekiline-carousel-block',
-		plugins_url( $style_css, __FILE__ ),
-		array(),
-		filemtime( "$dir/$style_css" )
-	);
+	// $style_css = 'build/style-index.css';
+	// wp_register_style(
+	// 	'ekiline-blocks-ekiline-carousel-block',
+	// 	plugins_url( $style_css, __FILE__ ),
+	// 	array(),
+	// 	filemtime( "$dir/$style_css" )
+	// );
 
 	register_block_type( 'ekiline-blocks/ekiline-carousel', array(
 		'editor_script' => 'ekiline-blocks-ekiline-carousel-block-editor',
-		'editor_style'  => 'ekiline-blocks-ekiline-carousel-block-editor',
-		'style'         => 'ekiline-blocks-ekiline-carousel-block',
+		// 'editor_style'  => 'ekiline-blocks-ekiline-carousel-block-editor',
+		// 'style'         => 'ekiline-blocks-ekiline-carousel-block',
+		// Render call back crea el objeto en el front.
+        'render_callback' => 'gutenberg_examples_dynamic_render_callback'
 	) );
 }
 add_action( 'init', 'ekiline_blocks_ekiline_carousel_block_init' );
+
+/**
+ * Funcion php para muestreo en front
+ */
+function gutenberg_examples_dynamic_render_callback( $block_attributes, $content ) {
+    $recent_posts = wp_get_recent_posts( array(
+        'numberposts' => 1,
+        'post_status' => 'publish',
+    ) );
+    if ( count( $recent_posts ) === 0 ) {
+        return 'No posts';
+    }
+    $post = $recent_posts[ 0 ];
+    $post_id = $post['ID'];
+    return sprintf(
+        '<a class="wp-block-my-plugin-latest-post" href="%1$s">%2$s</a>',
+        esc_url( get_permalink( $post_id ) ),
+        esc_html( get_the_title( $post_id ) )
+    );
+}

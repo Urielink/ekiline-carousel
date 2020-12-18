@@ -6,6 +6,14 @@
 import { registerBlockType } from '@wordpress/blocks';
 
 /**
+ * clases auxiliares
+ */
+// import { withSelect } from '@wordpress/data'; //renderiza con js
+import ServerSideRender from '@wordpress/server-side-render'; // renderiza con php
+import { useBlockProps } from '@wordpress/block-editor';
+
+
+/**
  * Retrieves the translation of text.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
@@ -24,8 +32,8 @@ import './style.scss';
 /**
  * Internal dependencies
  */
-import Edit from './edit';
-import save from './save';
+// import Edit from './edit';
+// import save from './save';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -73,12 +81,52 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 	/**
 	 * @see ./edit.js
 	 */
-	edit: Edit,
+	// edit: Edit,
+
+	/**
+	 * Esta opcion renderiza el bloque con marcado js
+	 */
+    // edit: withSelect( ( select ) => {
+    //     return {
+    //         posts: select( 'core' ).getEntityRecords( 'postType', 'post' ),
+    //     };
+    // } )( ( { posts } ) => {
+
+    //     const blockProps = useBlockProps();
+
+    //     return (
+    //         <div { ...blockProps }>
+    //             { ! posts && 'Loading' }
+    //             { posts && posts.length === 0 && 'No Posts' }
+    //             { posts && posts.length > 0 && (
+    //                 <a href={ posts[ 0 ].link }>
+    //                     { posts[ 0 ].title.rendered }
+    //                 </a>
+    //             ) }
+    //         </div>
+    //     )
+
+	// } ),
+
+	/**
+	 * Esta opcion ocupa el callback
+	 */
+	edit: function( props ) {
+        const blockProps = useBlockProps();
+        return (
+            <div {...blockProps}>
+                <ServerSideRender
+                    block="ekiline-blocks/ekiline-carousel"
+                    attributes={ props.attributes }
+                />
+            </div>
+        );
+    },
 
 	/**
 	 * @see ./save.js
 	 */
-	save,
+	// save,
 } );
 
 /**
