@@ -1,0 +1,15 @@
+{
+	"apiVersion": 2,
+	"name": "ekiline-blocks/ekiline-carousel",
+	"title": "Ekiline Carousel",
+	"category": "widgets",
+	"icon": "slides",
+	"description": "Aqui va la descripcion del plugin",
+	"textdomain": "ekiline-carousel",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}
