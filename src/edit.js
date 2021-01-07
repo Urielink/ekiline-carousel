@@ -36,15 +36,14 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
-	const props = '',
-	blockProps = useBlockProps();
+export default function Edit(props) {
+	
+	const { blockProps = useBlockProps() } = props;
 
 	return (
-		<div {...blockProps}>
+		<div data-extra="confirmo" {...blockProps}>
 			<ServerSideRender
 				block="ekiline-blocks/ekiline-carousel"
-				attributes={ props.attributes }
 			/>
 		</div>
 	);

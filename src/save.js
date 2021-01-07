@@ -15,12 +15,13 @@ import { __ } from '@wordpress/i18n';
  * @return {WPElement} Element to render.
  */
 export default function save() {
-	return (
-		<p>
-			{ __(
-				'Ekiline Carousel – hello from the saved content!',
-				'ekiline-carousel'
-			) }
-		</p>
-	);
+	return null;
+	// return (
+	// 	<p>
+	// 		{ __(
+	// 			'Ekiline Carousel – hello from the saved content!',
+	// 			'ekiline-carousel'
+	// 		) }
+	// 	</p>
+	// );
 }
