@@ -170,35 +170,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/@babel/runtime/helpers/extends.js":
-/*!********************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/extends.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-
-/***/ }),
-
 /***/ "./src/edit.js":
 /*!*********************!*\
   !*** ./src/edit.js ***!
@@ -209,19 +180,18 @@ module.exports = _extends;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edit; });
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
 /* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_5__);
-
 
 
 /**
@@ -236,6 +206,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
+
 
 
 /**
@@ -262,13 +233,184 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function Edit(props) {
-  var _props$blockProps = props.blockProps,
-      blockProps = _props$blockProps === void 0 ? Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"])() : _props$blockProps;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({
-    "data-extra": "confirmo"
-  }, blockProps), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default.a, {
-    block: "ekiline-blocks/ekiline-carousel"
-  }));
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes,
+      _props$blockProps = props.blockProps,
+      blockProps = _props$blockProps === void 0 ? Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])() : _props$blockProps;
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+    title: "Contenido de carrusel",
+    initialOpen: true
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Escribe", 'ekiline'),
+    type: "number",
+    value: attributes.myRichText // variable
+    ,
+    onChange: function onChange(newval) {
+      return setAttributes({
+        myRichText: parseInt(newval)
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+    label: "Tipo de contenido",
+    value: attributes.ChooseType,
+    options: [{
+      label: "Posts",
+      value: 'posts'
+    }, {
+      label: "Images",
+      value: 'images'
+    }],
+    onChange: function onChange(ChooseType) {
+      return setAttributes({
+        ChooseType: ChooseType
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Inserta IDs", 'ekiline'),
+    type: "number",
+    value: attributes.SetIds // variable
+    ,
+    onChange: function onChange(newval) {
+      return setAttributes({
+        SetIds: parseInt(newval)
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("¿Cuantas publicaciones?", 'ekiline'),
+    type: "number",
+    value: attributes.SetAmount // variable
+    ,
+    onChange: function onChange(newval) {
+      return setAttributes({
+        SetAmount: parseInt(newval)
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+    label: "Organizar por:",
+    value: attributes.SetOrderBy,
+    options: [{
+      label: "Date",
+      value: 'date'
+    }, {
+      label: "Modified",
+      value: 'modified'
+    }, {
+      label: "Title",
+      value: 'title'
+    }, {
+      label: "Name",
+      value: 'name'
+    }, {
+      label: "Author",
+      value: 'author'
+    }, {
+      label: "Rand",
+      value: 'rand'
+    }],
+    onChange: function onChange(SetOrderBy) {
+      return setAttributes({
+        SetOrderBy: SetOrderBy
+      });
+    }
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+    title: "Vista de carrusel",
+    initialOpen: true
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Columnas", 'ekiline'),
+    value: attributes.SetColumns // variable
+    ,
+    onChange: function onChange(newval) {
+      return setAttributes({
+        SetColumns: parseInt(newval)
+      });
+    },
+    min: 1,
+    max: 6
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Buscar un bloque", 'ekiline'),
+    value: attributes.FindBlock,
+    options: [{
+      label: "None",
+      value: ''
+    }, {
+      label: "Block",
+      value: 'core/block'
+    }, {
+      label: "Comments",
+      value: 'core/latest-comments'
+    }, {
+      label: "Archives",
+      value: 'core/archives'
+    }],
+    onChange: function onChange(FindBlock) {
+      return setAttributes({
+        FindBlock: FindBlock
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Mezclar post e imagen", 'ekiline'),
+    checked: attributes.AllowMixed,
+    onChange: function onChange(AllowMixed) {
+      return setAttributes({
+        AllowMixed: AllowMixed
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Mostrar controles", 'ekiline'),
+    checked: attributes.AddControls,
+    onChange: function onChange(AddControls) {
+      return setAttributes({
+        AddControls: AddControls
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Mostrar indicadores", 'ekiline'),
+    checked: attributes.AddIndicators,
+    onChange: function onChange(AddIndicators) {
+      return setAttributes({
+        AddIndicators: AddIndicators
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Iniciar automáticamente", 'ekiline'),
+    checked: attributes.SetAuto,
+    onChange: function onChange(SetAuto) {
+      return setAttributes({
+        SetAuto: SetAuto
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Transición en milisegundos", 'ekiline'),
+    type: "number",
+    value: attributes.SetTime // variable
+    ,
+    onChange: function onChange(newval) {
+      return setAttributes({
+        SetTime: parseInt(newval)
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Tipo de animacion", 'ekiline'),
+    value: attributes.SetAnimation,
+    options: [{
+      label: "Default",
+      value: ''
+    }, {
+      label: "Fade",
+      value: 'fade'
+    }, {
+      label: "Vertical",
+      value: 'vertical'
+    }],
+    onChange: function onChange(SetAnimation) {
+      return setAttributes({
+        SetAnimation: SetAnimation
+      });
+    }
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default.a, {
+    block: "ekiline-blocks/ekiline-carousel",
+    attributes: props.attributes
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Tipo: ", 'ekiline'), " ", attributes.ChooseType, " "), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Ids: ", 'ekiline'), "  ", attributes.SetIds, " "), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Cant: ", 'ekiline'), "  ", attributes.SetAmount, " "), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Ord: ", 'ekiline'), "  ", attributes.SetOrderBy, " "), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Cols: ", 'ekiline'), "  ", attributes.SetColumns, " "), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Bloque: ", 'ekiline'), "  ", attributes.FindBlock, " "), attributes.AllowMixed && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Mix: On", 'ekiline')), attributes.AddControls && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Cont: On", 'ekiline')), attributes.AddIndicators && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Inds: On", 'ekiline')), attributes.SetAuto && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Auto: On", 'ekiline')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Time: ", 'ekiline'), "  ", attributes.SetTime, " "), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Anim: ", 'ekiline'), "  ", attributes.SetAnimation, " "));
 }
 
 /***/ }),
@@ -297,10 +439,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./src/save.js");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -312,6 +457,8 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
+
+
 
 
 /**
@@ -327,7 +474,7 @@ __webpack_require__.r(__webpack_exports__);
  * Internal dependencies
  */
 
-
+ // import save from './save';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -364,6 +511,61 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
    * These can be any of WordPress’ Dashicons, or a custom svg element.
    */
   icon: 'slides',
+  // Pasar argumentos.
+  attributes: {
+    myRichText: {
+      type: 'string'
+    },
+    //toolbar
+    ChooseType: {
+      type: 'string',
+      default: 'posts'
+    },
+    SetIds: {
+      type: 'string',
+      default: ''
+    },
+    SetAmount: {
+      type: 'number',
+      default: 3
+    },
+    SetOrderBy: {
+      type: 'string',
+      default: 'date'
+    },
+    SetColumns: {
+      type: 'string',
+      default: 1
+    },
+    FindBlock: {
+      type: 'string',
+      default: 'None'
+    },
+    AllowMixed: {
+      type: 'boolean',
+      default: false
+    },
+    AddControls: {
+      type: 'boolean',
+      default: true
+    },
+    AddIndicators: {
+      type: 'boolean',
+      default: true
+    },
+    SetAuto: {
+      type: 'boolean',
+      default: true
+    },
+    SetTime: {
+      type: 'string',
+      default: '5000'
+    },
+    SetAnimation: {
+      type: 'string',
+      default: ''
+    }
+  },
 
   /**
    * Optional block extended support features.
@@ -378,12 +580,33 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
   /**
    * @see ./edit.js
    */
-  edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
+  edit: _edit__WEBPACK_IMPORTED_MODULE_5__["default"],
+  // edit: withSelect( ( select ) => {
+  //     return {
+  //         posts: select( 'core' ).getEntityRecords( 'postType', 'post' ),
+  //     };
+  // } )( ( { posts } ) => {
+  //     const blockProps = useBlockProps();
+  //     return (
+  //         <div { ...blockProps }>
+  //             { ! posts && 'Loading' }
+  //             { posts && posts.length === 0 && 'No Posts' }
+  //             { posts && posts.length > 0 && (
+  //                 <a href={ posts[ 0 ].link }>
+  //                     { posts[ 0 ].title.rendered }
+  //                 </a>
+  //             ) }
+  //         </div>
+  //     )
+  // } ),
 
   /**
    * @see ./save.js
    */
-  save: _save__WEBPACK_IMPORTED_MODULE_4__["default"]
+  // save,
+  save: function save() {
+    return null;
+  }
 });
 /**
  * Incorporar bloque a una coleccion.
@@ -394,47 +617,6 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockCollection"]
   title: 'Ekiline blocks',
   icon: 'layout'
 });
-
-/***/ }),
-
-/***/ "./src/save.js":
-/*!*********************!*\
-  !*** ./src/save.js ***!
-  \*********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return save; });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
-
-function save() {
-  return null; // return (
-  // 	<p>
-  // 		{ __(
-  // 			'Ekiline Carousel – hello from the saved content!',
-  // 			'ekiline-carousel'
-  // 		) }
-  // 	</p>
-  // );
-}
 
 /***/ }),
 
@@ -457,6 +639,28 @@ function save() {
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["blocks"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["components"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["data"]; }());
 
 /***/ }),
 

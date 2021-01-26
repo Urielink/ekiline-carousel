@@ -11,6 +11,8 @@ import { registerBlockType } from '@wordpress/blocks';
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
+import { withSelect } from '@wordpress/data';
+import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -25,7 +27,7 @@ import './style.scss';
  * Internal dependencies
  */
 import Edit from './edit';
-import save from './save';
+// import save from './save';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -62,6 +64,62 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 	 */
 	icon: 'slides',
 
+	// Pasar argumentos.
+	attributes: {
+		myRichText: {
+			type: 'string',
+		},
+		//toolbar
+		ChooseType: {
+			type: 'string',
+			default: 'posts',
+		},
+		SetIds:{
+			type: 'string',
+			default: '',
+		},
+		SetAmount:{
+			type: 'number',
+			default: 3,
+		},
+		SetOrderBy:{
+			type: 'string',
+			default: 'date',
+		},
+		SetColumns:{
+			type: 'string',
+			default: 1,
+		},
+		FindBlock:{
+			type: 'string',
+			default: 'None',
+		},
+		AllowMixed:{
+			type: 'boolean',
+			default: false,
+		},
+		AddControls:{
+			type: 'boolean',
+			default: true,
+		},
+		AddIndicators:{
+			type: 'boolean',
+			default: true,
+		},
+		SetAuto:{
+			type: 'boolean',
+			default: true,
+		},
+		SetTime:{
+			type: 'string',
+			default: '5000'
+		},
+		SetAnimation:{
+			type: 'string',
+			default: '',
+		},
+	},
+
 	/**
 	 * Optional block extended support features.
 	 */
@@ -76,11 +134,33 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 	 * @see ./edit.js
 	 */
 	edit: Edit,
+	// edit: withSelect( ( select ) => {
+    //     return {
+    //         posts: select( 'core' ).getEntityRecords( 'postType', 'post' ),
+    //     };
+    // } )( ( { posts } ) => {
+
+    //     const blockProps = useBlockProps();
+
+    //     return (
+    //         <div { ...blockProps }>
+    //             { ! posts && 'Loading' }
+    //             { posts && posts.length === 0 && 'No Posts' }
+    //             { posts && posts.length > 0 && (
+    //                 <a href={ posts[ 0 ].link }>
+    //                     { posts[ 0 ].title.rendered }
+    //                 </a>
+    //             ) }
+    //         </div>
+    //     )
+
+    // } ),
 
 	/**
 	 * @see ./save.js
 	 */
-	save,
+	// save,
+	save: () => { return null }
 } );
 
 /**

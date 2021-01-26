@@ -11,7 +11,8 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { ToggleControl, PanelBody, PanelRow, CheckboxControl, SelectControl, ColorPicker, ToolbarGroup, ToolbarButton, Placeholder, Disabled, TextControl, RangeControl } from '@wordpress/components';
 
 /**
  * Auxiliar, visualizar con php.
@@ -37,14 +38,199 @@ import './editor.scss';
  * @return {WPElement} Element to render.
  */
 export default function Edit(props) {
-	
-	const { blockProps = useBlockProps() } = props;
+	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
+
 
 	return (
-		<div data-extra="confirmo" {...blockProps}>
+		<div {...blockProps}>
+
+			<InspectorControls>
+				<PanelBody
+					title="Contenido de carrusel"
+					initialOpen={true}
+				>
+					{/* muestra, eliminar */}
+					<TextControl
+						label={__("Escribe", 'ekiline')}
+						type="number"
+						value={attributes.myRichText} // variable
+						onChange={(newval) => setAttributes({ myRichText: parseInt(newval) })}
+					/>
+					{/* Atributos OK */}
+					<SelectControl
+						label="Tipo de contenido"
+						value={attributes.ChooseType}
+						options={[
+							{label: "Posts", value: 'posts'},
+							{label: "Images", value: 'images'},
+						]}
+						onChange={(ChooseType) => setAttributes({ ChooseType })}
+					/>
+
+					<TextControl
+						label={__("Inserta IDs", 'ekiline')}
+						type="number"
+						value={attributes.SetIds} // variable
+						onChange={(newval) => setAttributes({ SetIds: parseInt(newval) })}
+					/>
+
+					<TextControl
+						label={__("¿Cuantas publicaciones?", 'ekiline')}
+						type="number"
+						value={attributes.SetAmount} // variable
+						onChange={(newval) => setAttributes({ SetAmount: parseInt(newval) })}
+					/>
+
+					<SelectControl
+						label="Organizar por:"
+						value={attributes.SetOrderBy}
+						options={[
+							{label: "Date", value: 'date'},
+							{label: "Modified", value: 'modified'},
+							{label: "Title", value: 'title'},
+							{label: "Name", value: 'name'},
+							{label: "Author", value: 'author'},
+							{label: "Rand", value: 'rand'},
+						]}
+						onChange={(SetOrderBy) => setAttributes({ SetOrderBy })}
+					/>
+				</PanelBody>
+
+				<PanelBody
+					title="Vista de carrusel"
+					initialOpen={true}
+				>
+
+					<RangeControl
+						label={__("Columnas", 'ekiline')}
+						value={attributes.SetColumns} // variable
+						onChange={(newval) => setAttributes({ SetColumns: parseInt(newval) })}
+						min={ 1 }
+						max={ 6 }
+					/>
+
+					{/** 
+					 * Buscar bloques existentes.
+					 * https://developer.wordpress.org/reference/functions/get_dynamic_block_names/
+					 */}
+					<SelectControl
+						label={__("Buscar un bloque", 'ekiline')}
+						value={attributes.FindBlock}
+						options={[
+							{label: "None", value: ''},
+							{label: "Block", value: 'core/block'},
+							{label: "Comments", value: 'core/latest-comments'},
+							{label: "Archives", value: 'core/archives'},
+						]}
+						onChange={(FindBlock) => setAttributes({ FindBlock })}
+					/>
+
+					<ToggleControl
+						label={__("Mezclar post e imagen", 'ekiline')}
+						checked={attributes.AllowMixed}
+						onChange={(AllowMixed) => setAttributes({ AllowMixed })}
+					/>
+
+					<ToggleControl
+						label={__("Mostrar controles", 'ekiline')}
+						checked={attributes.AddControls}
+						onChange={(AddControls) => setAttributes({ AddControls })}
+					/>
+
+					<ToggleControl
+						label={__("Mostrar indicadores", 'ekiline')}
+						checked={attributes.AddIndicators}
+						onChange={(AddIndicators) => setAttributes({ AddIndicators })}
+					/>
+
+					<ToggleControl
+						label={__("Iniciar automáticamente", 'ekiline')}
+						checked={attributes.SetAuto}
+						onChange={(SetAuto) => setAttributes({ SetAuto })}
+					/>
+
+					<TextControl
+						label={__("Transición en milisegundos", 'ekiline')}
+						type="number"
+						value={attributes.SetTime} // variable
+						onChange={(newval) => setAttributes({ SetTime: parseInt(newval) })}
+					/>
+
+					<SelectControl
+						label={__("Tipo de animacion", 'ekiline')}
+						value={attributes.SetAnimation}
+						options={[
+							{label: "Default", value: ''},
+							{label: "Fade", value: 'fade'},
+							{label: "Vertical", value: 'vertical'},
+						]}
+						onChange={(SetAnimation) => setAttributes({ SetAnimation })}
+					/>
+
+					{/* <PanelRow>
+						<ToggleControl
+							label="Toggle me"
+							checked={attributes.toggle}
+							onChange={(toggle) => setAttributes({ toggle })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<SelectControl
+							label="What's your favorite animal?"
+							value={attributes.favoriteAnimal}
+							options={[
+								{label: "Dogs", value: 'dogs'},
+								{label: "Cats", value: 'cats'},
+								{label: "Something else", value: 'weird_one'},
+							]}
+							onChange={(favoriteAnimal) => setAttributes({ favoriteAnimal })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ColorPicker
+							color={attributes.favoriteColor}
+							onChangeComplete={ (newval) => setAttributes({ favoriteColor: newval.hex }) }
+							disableAlpha // deshabilita transparencia
+						/>
+					</PanelRow>
+					<PanelRow>
+						<CheckboxControl
+							label="Activate lasers?"
+							checked={attributes.activateLasers}
+							onChange={(activateLasers) => setAttributes({ activateLasers })}
+						/>
+					</PanelRow> */}
+
+				</PanelBody>
+			</InspectorControls>
+
 			<ServerSideRender
 				block="ekiline-blocks/ekiline-carousel"
+				attributes={ props.attributes }
 			/>
+			{/* Prueba de items */}
+			<div>{__("Tipo: ", 'ekiline')} {attributes.ChooseType} </div>
+			<div>{__("Ids: ", 'ekiline')}  {attributes.SetIds} </div>
+			<div>{__("Cant: ", 'ekiline')}  {attributes.SetAmount} </div>
+			<div>{__("Ord: ", 'ekiline')}  {attributes.SetOrderBy} </div>
+			<div>{__("Cols: ", 'ekiline')}  {attributes.SetColumns} </div>
+			<div>{__("Bloque: ", 'ekiline')}  {attributes.FindBlock} </div>
+			{ attributes.AllowMixed && 
+					<div>{__("Mix: On", 'ekiline')}</div>
+			}
+			{ attributes.AddControls && 
+					<div>{__("Cont: On", 'ekiline')}</div>
+			}
+			{ attributes.AddIndicators && 
+					<div>{__("Inds: On", 'ekiline')}</div>
+			}
+			{ attributes.SetAuto && 
+					<div>{__("Auto: On", 'ekiline')}</div>
+			}
+
+			<div>{__("Time: ", 'ekiline')}  {attributes.SetTime} </div>
+			<div>{__("Anim: ", 'ekiline')}  {attributes.SetAnimation} </div>
+
 		</div>
 	);
 }

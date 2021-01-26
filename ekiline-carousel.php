@@ -57,30 +57,110 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 		// 'editor_style'  => 'ekiline-blocks-ekiline-carousel-block-editor',
 		// 'style'         => 'ekiline-blocks-ekiline-carousel-block',
 		// Render call back crea el objeto en el front.
-        'render_callback' => 'gutenberg_examples_dynamic_render_callback'
+		'render_callback' => 'gutenberg_examples_dynamic_render_callback',
+		// Se agreagn los atributos para el renderizado.
+		'attributes' => [
+			'myRichText' => [
+				'type' => 'string',
+			],
+			// toolbar
+			'ChooseType' => [
+				'type' => 'string',
+				'default' => 'posts',
+			],
+			'SetIds' => [
+				'type' => 'string',
+				'default' => '',
+			],
+			'SetAmount' => [
+				'type' => 'number',
+				'default' => 3,
+			],
+			'SetOrderBy' => [
+				'type' => 'string',
+				'default' => 'date',
+			],
+			'SetColumns' => [
+				'type' => 'string',
+				'default' => 1,
+			],
+			'FindBlock' => [
+				'type' => 'string',
+				'default' => 'None',
+			],
+			'AllowMixed' => [
+				'type' => 'boolean',
+				'default' => false,
+			],
+			'AddControls' => [
+				'type' => 'boolean',
+				'default' => true,
+			],
+			'AddIndicators' => [
+				'type' => 'boolean',
+				'default' => true,
+			],
+			'SetAuto' => [
+				'type' => 'boolean',
+				'default' => true,
+			],
+			'SetTime' => [
+				'type' => 'string',
+				'default' => '5000',
+			],
+			'SetAnimation' => [
+				'type' => 'string',
+				'default' => '',
+			],
+		]
 	) );
 }
 add_action( 'init', 'ekiline_blocks_ekiline_carousel_block_init' );
 
 /**
  * Funcion php para muestreo en front
+ * Observacion: los bloques dinamicos en el front, se ejecutan sin problema desde un afuncion php.
+ * Lo mejor para este caso, es ocupar el ServerRender.
+ *
+ * Los atributos declarados tanto en el bloque js como en php se consultan con los corchetes.
+ * $block_attributes['nombreAtributo']
  */
 function gutenberg_examples_dynamic_render_callback( $block_attributes, $content ) {
-    // $recent_posts = wp_get_recent_posts( array(
-    //     'numberposts' => 1,
-    //     'post_status' => 'publish',
-    // ) );
-    // if ( count( $recent_posts ) === 0 ) {
-    //     return 'No posts';
-    // }
+
+    $recent_posts = wp_get_recent_posts( array(
+        'numberposts' => 15,
+		'post_status' => 'publish',
+		'category'    => 22,
+    ) );
+    if ( count( $recent_posts ) === 0 ) {
+        return 'No posts';
+	}
+
+	$post = $recent_posts;
+	$postdata = '';
+	foreach ( $post as $key => $result ) {
+		$post_id = $result['ID'];
+		$postdata .= sprintf(
+			'<a class="bg-dark wp-block-my-plugin-latest-post" href="%1$s">%2$s</a><br>',
+			esc_url( get_permalink( $post_id ) ),
+			esc_html( get_the_title( $post_id ) ) . ' ' . $key
+		);
+	}
+
+	return $postdata;
+
+
     // $post = $recent_posts[ 0 ];
     // $post_id = $post['ID'];
     // return sprintf(
-    //     '<a class="wp-block-my-plugin-latest-post" href="%1$s">%2$s</a>',
+    //     '<a class="bg-dark wp-block-my-plugin-latest-post" href="%1$s">%2$s</a>',
     //     esc_url( get_permalink( $post_id ) ),
     //     esc_html( get_the_title( $post_id ) )
 	// );
 
-	$carousel = do_shortcode('[ekiline-carousel type="images" id="611,1045,49,50,52,51"]');
-	return $carousel;
+
+
+
+	// $carousel = do_shortcode('[ekiline-carousel type="images" id="611,1045,49,50,52,51"]');
+	// return $carousel;
 }
