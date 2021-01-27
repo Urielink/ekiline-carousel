@@ -66,9 +66,6 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 
 	// Pasar argumentos.
 	attributes: {
-		myRichText: {
-			type: 'string',
-		},
 		//toolbar
 		ChooseType: {
 			type: 'string',
@@ -87,12 +84,12 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 			default: 'date',
 		},
 		SetColumns:{
-			type: 'string',
+			type: 'number',
 			default: 1,
 		},
 		FindBlock:{
 			type: 'string',
-			default: 'None',
+			default: 'none',
 		},
 		AllowMixed:{
 			type: 'boolean',
@@ -111,7 +108,7 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 			default: true,
 		},
 		SetTime:{
-			type: 'string',
+			type: 'number',
 			default: '5000'
 		},
 		SetAnimation:{
@@ -134,27 +131,6 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 	 * @see ./edit.js
 	 */
 	edit: Edit,
-	// edit: withSelect( ( select ) => {
-    //     return {
-    //         posts: select( 'core' ).getEntityRecords( 'postType', 'post' ),
-    //     };
-    // } )( ( { posts } ) => {
-
-    //     const blockProps = useBlockProps();
-
-    //     return (
-    //         <div { ...blockProps }>
-    //             { ! posts && 'Loading' }
-    //             { posts && posts.length === 0 && 'No Posts' }
-    //             { posts && posts.length > 0 && (
-    //                 <a href={ posts[ 0 ].link }>
-    //                     { posts[ 0 ].title.rendered }
-    //                 </a>
-    //             ) }
-    //         </div>
-    //     )
-
-    // } ),
 
 	/**
 	 * @see ./save.js

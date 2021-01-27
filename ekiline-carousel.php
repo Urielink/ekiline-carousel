@@ -60,9 +60,6 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 		'render_callback' => 'gutenberg_examples_dynamic_render_callback',
 		// Se agreagn los atributos para el renderizado.
 		'attributes' => [
-			'myRichText' => [
-				'type' => 'string',
-			],
 			// toolbar
 			'ChooseType' => [
 				'type' => 'string',
@@ -81,12 +78,12 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 				'default' => 'date',
 			],
 			'SetColumns' => [
-				'type' => 'string',
+				'type' => 'number',
 				'default' => 1,
 			],
 			'FindBlock' => [
 				'type' => 'string',
-				'default' => 'None',
+				'default' => 'none',
 			],
 			'AllowMixed' => [
 				'type' => 'boolean',
@@ -105,7 +102,7 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 				'default' => true,
 			],
 			'SetTime' => [
-				'type' => 'string',
+				'type' => 'number',
 				'default' => '5000',
 			],
 			'SetAnimation' => [
@@ -127,40 +124,52 @@ add_action( 'init', 'ekiline_blocks_ekiline_carousel_block_init' );
  */
 function gutenberg_examples_dynamic_render_callback( $block_attributes, $content ) {
 
-    $recent_posts = wp_get_recent_posts( array(
-        'numberposts' => 15,
-		'post_status' => 'publish',
-		'category'    => 22,
-    ) );
-    if ( count( $recent_posts ) === 0 ) {
-        return 'No posts';
+	$carousel_args  = '';
+
+	if ( 'posts' !== $block_attributes['ChooseType'] ){
+		$carousel_args  .= 'type="' . $block_attributes['ChooseType'] . '" ';
 	}
 
-	$post = $recent_posts;
-	$postdata = '';
-	foreach ( $post as $key => $result ) {
-		$post_id = $result['ID'];
-		$postdata .= sprintf(
-			'<a class="bg-dark wp-block-my-plugin-latest-post" href="%1$s">%2$s</a><br>',
-			esc_url( get_permalink( $post_id ) ),
-			esc_html( get_the_title( $post_id ) ) . ' ' . $key
-		);
+	if ( $block_attributes['SetIds'] ) {
+		$carousel_args .= 'id="' . $block_attributes['SetIds'] . '" ';
 	}
 
-	return $postdata;
+	if ( '3' !==  $block_attributes['SetAmount'] && 'posts' === $block_attributes['ChooseType'] ){
+		$carousel_args .= 'amount="' . $block_attributes['SetAmount'] . '" ';
+	}
+
+	if ( 'date' !== $block_attributes['SetOrderBy'] && 'posts' === $block_attributes['ChooseType'] ) {
+		$carousel_args .= 'orderby="' . $block_attributes['SetOrderBy'] . '" ';
+	}
+
+	if ( 'none' !== $block_attributes['FindBlock'] && 'posts' === $block_attributes['ChooseType'] ){
+		$carousel_args .= 'block="' . $block_attributes['FindBlock'] . '" ';
+	}
+
+	if ( 'none' !== $block_attributes['FindBlock'] && false !== $block_attributes['AllowMixed'] && 'posts' === $block_attributes['ChooseType'] ){
+		$carousel_args .= 'mixed="true" ';
+	}
 
 
-    // $post = $recent_posts[ 0 ];
-    // $post_id = $post['ID'];
-    // return sprintf(
-    //     '<a class="bg-dark wp-block-my-plugin-latest-post" href="%1$s">%2$s</a>',
-    //     esc_url( get_permalink( $post_id ) ),
-    //     esc_html( get_the_title( $post_id ) )
-	// );
+	if ( 1 !== $block_attributes['SetColumns'] ){
+		$carousel_args .= 'columns="' . $block_attributes['SetColumns'] . '" '; // fix en editor.
+	}
+	if ( false === $block_attributes['AddControls'] ){
+		$carousel_args .= 'control="false" ';
+	}
+	if ( false === $block_attributes['AddIndicators'] ){
+		$carousel_args .= 'indicators="false" ';
+	}
+	if ( false === $block_attributes['SetAuto'] ){
+		$carousel_args .= 'auto="false" ';
+	}
+	if ( '5000' !== $block_attributes['SetTime'] ){
+		$carousel_args .= 'time="' . $block_attributes['SetTime'] . '" ';
+	}
+	if ( '' !== $block_attributes['SetAnimation'] ){
+		$carousel_args .= 'animation="' . $block_attributes['SetAnimation'] . '" ';
+	}
 
-
-
-
-	// $carousel = do_shortcode('[ekiline-carousel type="images" id="611,1045,49,50,52,51"]');
-	// return $carousel;
+	$carousel = do_shortcode('[ekiline-carousel ' . $carousel_args . ']');
+	return $carousel;
 }

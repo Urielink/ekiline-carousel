@@ -49,13 +49,6 @@ export default function Edit(props) {
 					title="Contenido de carrusel"
 					initialOpen={true}
 				>
-					{/* muestra, eliminar */}
-					<TextControl
-						label={__("Escribe", 'ekiline')}
-						type="number"
-						value={attributes.myRichText} // variable
-						onChange={(newval) => setAttributes({ myRichText: parseInt(newval) })}
-					/>
 					{/* Atributos OK */}
 					<SelectControl
 						label="Tipo de contenido"
@@ -69,31 +62,67 @@ export default function Edit(props) {
 
 					<TextControl
 						label={__("Inserta IDs", 'ekiline')}
-						type="number"
 						value={attributes.SetIds} // variable
-						onChange={(newval) => setAttributes({ SetIds: parseInt(newval) })}
+						onChange={(newval) => setAttributes({ SetIds:newval })}
 					/>
 
-					<TextControl
-						label={__("¿Cuantas publicaciones?", 'ekiline')}
-						type="number"
-						value={attributes.SetAmount} // variable
-						onChange={(newval) => setAttributes({ SetAmount: parseInt(newval) })}
-					/>
+					{/* Mostrar solo cuando sean posts */}
+					{ 'posts' === attributes.ChooseType &&
+						<TextControl
+							label={__("¿Cuantas publicaciones?", 'ekiline')}
+							type="number"
+							value={attributes.SetAmount} // variable
+							onChange={(newval) => setAttributes({ SetAmount: parseInt(newval) })}
+						/>
+					}
 
-					<SelectControl
-						label="Organizar por:"
-						value={attributes.SetOrderBy}
-						options={[
-							{label: "Date", value: 'date'},
-							{label: "Modified", value: 'modified'},
-							{label: "Title", value: 'title'},
-							{label: "Name", value: 'name'},
-							{label: "Author", value: 'author'},
-							{label: "Rand", value: 'rand'},
-						]}
-						onChange={(SetOrderBy) => setAttributes({ SetOrderBy })}
-					/>
+					{/* Mostrar solo cuando sean posts */}
+					{ 'posts' === attributes.ChooseType &&
+						<SelectControl
+							label="Organizar por:"
+							value={attributes.SetOrderBy}
+							options={[
+								{label: "Date", value: 'date'},
+								{label: "Modified", value: 'modified'},
+								{label: "Title", value: 'title'},
+								{label: "Name", value: 'name'},
+								{label: "Author", value: 'author'},
+								{label: "Rand", value: 'rand'},
+							]}
+							onChange={(SetOrderBy) => setAttributes({ SetOrderBy })}
+						/>
+					}
+
+					{/** 
+					 * Buscar bloques existentes.
+					 * https://developer.wordpress.org/reference/functions/get_dynamic_block_names/
+					 */}
+
+					{/* Mostrar solo cuando sean posts */}
+					{ 'posts' === attributes.ChooseType &&
+						<SelectControl
+							label={__("Buscar un bloque en un post", 'ekiline')}
+							value={attributes.FindBlock}
+							options={[
+								{label: "None", value: 'none'},
+								{label: "Block", value: 'core/block'},
+								{label: "Comments", value: 'core/latest-comments'},
+								{label: "Archives", value: 'core/archives'},
+								{label: "Cover", value: 'core/cover'},
+							]}
+							onChange={(FindBlock) => setAttributes({ FindBlock })}
+						/>
+					}
+
+					{/* Mostrar solo cuando el bloque es buscado */}
+					{ 'none' !== attributes.FindBlock &&
+						<ToggleControl
+							label={__("Si no hay bloque, permitir ver publicacion", 'ekiline')}
+							checked={attributes.AllowMixed}
+							onChange={(AllowMixed) => setAttributes({ AllowMixed })}
+						/>
+					}
+
 				</PanelBody>
 
 				<PanelBody
@@ -107,28 +136,6 @@ export default function Edit(props) {
 						onChange={(newval) => setAttributes({ SetColumns: parseInt(newval) })}
 						min={ 1 }
 						max={ 6 }
-					/>
-
-					{/** 
-					 * Buscar bloques existentes.
-					 * https://developer.wordpress.org/reference/functions/get_dynamic_block_names/
-					 */}
-					<SelectControl
-						label={__("Buscar un bloque", 'ekiline')}
-						value={attributes.FindBlock}
-						options={[
-							{label: "None", value: ''},
-							{label: "Block", value: 'core/block'},
-							{label: "Comments", value: 'core/latest-comments'},
-							{label: "Archives", value: 'core/archives'},
-						]}
-						onChange={(FindBlock) => setAttributes({ FindBlock })}
-					/>
-
-					<ToggleControl
-						label={__("Mezclar post e imagen", 'ekiline')}
-						checked={attributes.AllowMixed}
-						onChange={(AllowMixed) => setAttributes({ AllowMixed })}
 					/>
 
 					<ToggleControl
@@ -167,48 +174,15 @@ export default function Edit(props) {
 						onChange={(SetAnimation) => setAttributes({ SetAnimation })}
 					/>
 
-					{/* <PanelRow>
-						<ToggleControl
-							label="Toggle me"
-							checked={attributes.toggle}
-							onChange={(toggle) => setAttributes({ toggle })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<SelectControl
-							label="What's your favorite animal?"
-							value={attributes.favoriteAnimal}
-							options={[
-								{label: "Dogs", value: 'dogs'},
-								{label: "Cats", value: 'cats'},
-								{label: "Something else", value: 'weird_one'},
-							]}
-							onChange={(favoriteAnimal) => setAttributes({ favoriteAnimal })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ColorPicker
-							color={attributes.favoriteColor}
-							onChangeComplete={ (newval) => setAttributes({ favoriteColor: newval.hex }) }
-							disableAlpha // deshabilita transparencia
-						/>
-					</PanelRow>
-					<PanelRow>
-						<CheckboxControl
-							label="Activate lasers?"
-							checked={attributes.activateLasers}
-							onChange={(activateLasers) => setAttributes({ activateLasers })}
-						/>
-					</PanelRow> */}
-
 				</PanelBody>
+
 			</InspectorControls>
 
 			<ServerSideRender
 				block="ekiline-blocks/ekiline-carousel"
 				attributes={ props.attributes }
 			/>
-			{/* Prueba de items */}
+			{/* Prueba de items eliminar*/}
 			<div>{__("Tipo: ", 'ekiline')} {attributes.ChooseType} </div>
 			<div>{__("Ids: ", 'ekiline')}  {attributes.SetIds} </div>
 			<div>{__("Cant: ", 'ekiline')}  {attributes.SetAmount} </div>

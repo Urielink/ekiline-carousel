@@ -240,17 +240,7 @@ function Edit(props) {
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Contenido de carrusel",
     initialOpen: true
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Escribe", 'ekiline'),
-    type: "number",
-    value: attributes.myRichText // variable
-    ,
-    onChange: function onChange(newval) {
-      return setAttributes({
-        myRichText: parseInt(newval)
-      });
-    }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
     label: "Tipo de contenido",
     value: attributes.ChooseType,
     options: [{
@@ -267,15 +257,14 @@ function Edit(props) {
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Inserta IDs", 'ekiline'),
-    type: "number",
     value: attributes.SetIds // variable
     ,
     onChange: function onChange(newval) {
       return setAttributes({
-        SetIds: parseInt(newval)
+        SetIds: newval
       });
     }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
+  }), 'posts' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("¿Cuantas publicaciones?", 'ekiline'),
     type: "number",
     value: attributes.SetAmount // variable
@@ -285,7 +274,7 @@ function Edit(props) {
         SetAmount: parseInt(newval)
       });
     }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+  }), 'posts' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
     label: "Organizar por:",
     value: attributes.SetOrderBy,
     options: [{
@@ -312,6 +301,38 @@ function Edit(props) {
         SetOrderBy: SetOrderBy
       });
     }
+  }), 'posts' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Buscar un bloque en un post", 'ekiline'),
+    value: attributes.FindBlock,
+    options: [{
+      label: "None",
+      value: 'none'
+    }, {
+      label: "Block",
+      value: 'core/block'
+    }, {
+      label: "Comments",
+      value: 'core/latest-comments'
+    }, {
+      label: "Archives",
+      value: 'core/archives'
+    }, {
+      label: "Cover",
+      value: 'core/cover'
+    }],
+    onChange: function onChange(FindBlock) {
+      return setAttributes({
+        FindBlock: FindBlock
+      });
+    }
+  }), 'none' !== attributes.FindBlock && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Si no hay bloque, permitir ver publicacion", 'ekiline'),
+    checked: attributes.AllowMixed,
+    onChange: function onChange(AllowMixed) {
+      return setAttributes({
+        AllowMixed: AllowMixed
+      });
+    }
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Vista de carrusel",
     initialOpen: true
@@ -326,35 +347,6 @@ function Edit(props) {
     },
     min: 1,
     max: 6
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Buscar un bloque", 'ekiline'),
-    value: attributes.FindBlock,
-    options: [{
-      label: "None",
-      value: ''
-    }, {
-      label: "Block",
-      value: 'core/block'
-    }, {
-      label: "Comments",
-      value: 'core/latest-comments'
-    }, {
-      label: "Archives",
-      value: 'core/archives'
-    }],
-    onChange: function onChange(FindBlock) {
-      return setAttributes({
-        FindBlock: FindBlock
-      });
-    }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Mezclar post e imagen", 'ekiline'),
-    checked: attributes.AllowMixed,
-    onChange: function onChange(AllowMixed) {
-      return setAttributes({
-        AllowMixed: AllowMixed
-      });
-    }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Mostrar controles", 'ekiline'),
     checked: attributes.AddControls,
@@ -513,9 +505,6 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
   icon: 'slides',
   // Pasar argumentos.
   attributes: {
-    myRichText: {
-      type: 'string'
-    },
     //toolbar
     ChooseType: {
       type: 'string',
@@ -534,12 +523,12 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
       default: 'date'
     },
     SetColumns: {
-      type: 'string',
+      type: 'number',
       default: 1
     },
     FindBlock: {
       type: 'string',
-      default: 'None'
+      default: 'none'
     },
     AllowMixed: {
       type: 'boolean',
@@ -558,7 +547,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
       default: true
     },
     SetTime: {
-      type: 'string',
+      type: 'number',
       default: '5000'
     },
     SetAnimation: {
@@ -581,24 +570,6 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
    * @see ./edit.js
    */
   edit: _edit__WEBPACK_IMPORTED_MODULE_5__["default"],
-  // edit: withSelect( ( select ) => {
-  //     return {
-  //         posts: select( 'core' ).getEntityRecords( 'postType', 'post' ),
-  //     };
-  // } )( ( { posts } ) => {
-  //     const blockProps = useBlockProps();
-  //     return (
-  //         <div { ...blockProps }>
-  //             { ! posts && 'Loading' }
-  //             { posts && posts.length === 0 && 'No Posts' }
-  //             { posts && posts.length > 0 && (
-  //                 <a href={ posts[ 0 ].link }>
-  //                     { posts[ 0 ].title.rendered }
-  //                 </a>
-  //             ) }
-  //         </div>
-  //     )
-  // } ),
 
   /**
    * @see ./save.js
