@@ -182,28 +182,6 @@ export default function Edit(props) {
 				block="ekiline-blocks/ekiline-carousel"
 				attributes={ props.attributes }
 			/>
-			{/* Prueba de items eliminar*/}
-			<div>{__("Tipo: ", 'ekiline')} {attributes.ChooseType} </div>
-			<div>{__("Ids: ", 'ekiline')}  {attributes.SetIds} </div>
-			<div>{__("Cant: ", 'ekiline')}  {attributes.SetAmount} </div>
-			<div>{__("Ord: ", 'ekiline')}  {attributes.SetOrderBy} </div>
-			<div>{__("Cols: ", 'ekiline')}  {attributes.SetColumns} </div>
-			<div>{__("Bloque: ", 'ekiline')}  {attributes.FindBlock} </div>
-			{ attributes.AllowMixed && 
-					<div>{__("Mix: On", 'ekiline')}</div>
-			}
-			{ attributes.AddControls && 
-					<div>{__("Cont: On", 'ekiline')}</div>
-			}
-			{ attributes.AddIndicators && 
-					<div>{__("Inds: On", 'ekiline')}</div>
-			}
-			{ attributes.SetAuto && 
-					<div>{__("Auto: On", 'ekiline')}</div>
-			}
-
-			<div>{__("Time: ", 'ekiline')}  {attributes.SetTime} </div>
-			<div>{__("Anim: ", 'ekiline')}  {attributes.SetAnimation} </div>
 
 		</div>
 	);
