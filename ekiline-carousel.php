@@ -150,7 +150,6 @@ function gutenberg_examples_dynamic_render_callback( $block_attributes, $content
 		$carousel_args .= 'mixed="true" ';
 	}
 
-
 	if ( 1 !== $block_attributes['SetColumns'] ){
 		$carousel_args .= 'columns="' . $block_attributes['SetColumns'] . '" '; // fix en editor.
 	}

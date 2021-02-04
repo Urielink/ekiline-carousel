@@ -186,3 +186,5 @@ export default function Edit(props) {
 		</div>
 	);
 }
+
+// probar el if en conjunto al serversiderender
