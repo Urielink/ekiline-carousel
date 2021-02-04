@@ -47,7 +47,7 @@ export default function Edit(props) {
 			<InspectorControls>
 				<PanelBody
 					title="Contenido de carrusel"
-					initialOpen={true}
+					initialOpen={false}
 				>
 					{/* Atributos OK */}
 					<SelectControl
@@ -135,7 +135,7 @@ export default function Edit(props) {
 						value={attributes.SetColumns} // variable
 						onChange={(newval) => setAttributes({ SetColumns: parseInt(newval) })}
 						min={ 1 }
-						max={ 6 }
+						max={ 4 }
 					/>
 
 					<ToggleControl
