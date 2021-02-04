@@ -39,7 +39,7 @@ import './editor.scss';
  */
 export default function Edit(props) {
 	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
-
+	const boxClass = 'ekiline-carousel-box ' + attributes.SetColumns + 'column bg-dark p-' + attributes.SetColumns;
 
 	return (
 		<div {...blockProps}>
@@ -181,6 +181,7 @@ export default function Edit(props) {
 			<ServerSideRender
 				block="ekiline-blocks/ekiline-carousel"
 				attributes={ props.attributes }
+				className={boxClass}
 			/>
 
 		</div>

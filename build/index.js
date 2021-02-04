@@ -237,6 +237,7 @@ function Edit(props) {
       setAttributes = props.setAttributes,
       _props$blockProps = props.blockProps,
       blockProps = _props$blockProps === void 0 ? Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])() : _props$blockProps;
+  var boxClass = 'ekiline-carousel-box ' + attributes.SetColumns + 'column bg-dark p-' + attributes.SetColumns;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Contenido de carrusel",
     initialOpen: false
@@ -401,7 +402,8 @@ function Edit(props) {
     }
   }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default.a, {
     block: "ekiline-blocks/ekiline-carousel",
-    attributes: props.attributes
+    attributes: props.attributes,
+    className: boxClass
   }));
 } // probar el if en conjunto al serversiderender
 
