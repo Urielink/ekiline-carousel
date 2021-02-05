@@ -11,8 +11,8 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { ToggleControl, PanelBody, PanelRow, CheckboxControl, SelectControl, ColorPicker, ToolbarGroup, ToolbarButton, Placeholder, Disabled, TextControl, RangeControl } from '@wordpress/components';
+import { useBlockProps, InspectorControls, BlockControls } from '@wordpress/block-editor';
+import { ToggleControl, PanelBody, PanelRow, CheckboxControl, SelectControl, ColorPicker, Toolbar, ToolbarGroup, ToolbarButton, ToolbarItem, Button, Placeholder, Disabled, TextControl, RangeControl } from '@wordpress/components';
 
 /**
  * Auxiliar, visualizar con php.
@@ -38,8 +38,9 @@ import './editor.scss';
  * @return {WPElement} Element to render.
  */
 export default function Edit(props) {
+
 	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
-	const boxClass = 'ekiline-carousel-box ' + attributes.SetColumns + 'column bg-dark p-' + attributes.SetColumns;
+	const boxClass = setClassName();
 
 	return (
 		<div {...blockProps}>
@@ -133,7 +134,7 @@ export default function Edit(props) {
 					<RangeControl
 						label={__("Columnas", 'ekiline')}
 						value={attributes.SetColumns} // variable
-						onChange={(newval) => setAttributes({ SetColumns: parseInt(newval) })}
+						onChange={(newval) => setAttributes({ SetColumns: parseInt(newval) })}						
 						min={ 1 }
 						max={ 4 }
 					/>
@@ -178,14 +179,84 @@ export default function Edit(props) {
 
 			</InspectorControls>
 
-			<ServerSideRender
-				block="ekiline-blocks/ekiline-carousel"
-				attributes={ props.attributes }
-				className={boxClass}
-			/>
+			{/**
+			 * Agregar un boton al control de bloque
+			 * https://developer.wordpress.org/block-editor/components/toolbar-item/
+			 * */}
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarItem 
+						as={ Button }
+						onClick={ () => {
+							console.log( '.'+ boxClass +' .carousel-multiple' );
+							transformarCarrusel('.'+ boxClass +' .carousel-multiple');
+						} }
+					>preview</ToolbarItem>
+				</ToolbarGroup>
+			</BlockControls>
+
+			<div className={ boxClass }>
+				<ServerSideRender
+					block="ekiline-blocks/ekiline-carousel"
+					attributes={ props.attributes }
+				/>
+			</div>
 
 		</div>
 	);
 }
 
-// probar el if en conjunto al serversiderender
+// Establecer el nombre del contenedor.
+function setClassName() {
+	const rand = Math.floor(Math.random() * 100) + 1,
+	name = 'ekiline-carousel-box-' + rand + '-col';
+	return name;
+}
+
+// // ejecutar preview
+// function transformarCarrusel(carrusel){
+
+// 	jQuery(document).ready(function( $ ) {
+
+// 		if ( 0 === $(carrusel).length ) {
+// 			return;
+// 		}
+
+// 		$(carrusel).each(function(){
+// 			// Vistas, columnas y grupo.
+// 			var params = [ ['x2','6','0'],['x3','4','1'],['x4','3','2'],['x6','2','4'] ];
+// 			var view, item;
+// 			// Envoltorio extra para agrupar.
+// 			for ( var i = 0; i < params.length; i++ ) {
+// 				if ( $(this).hasClass( params[i][0] ) ){
+// 					item = params[i][1];
+// 					view = params[i][2];
+// 				}
+// 			}
+// 			// Items envoltorio.
+// 			$(this).find('.carousel-item').each(function(){
+// 				$(this).children().wrapAll('<figure class="col-md-' + item + '">','</figure>');
+// 			});
+// 			// Loop grupos.
+// 			$(this).find( '.carousel-item').each(function(){
+// 				// Copiar el primer slide y agregarlo.
+// 				var next = $(this).next();
+// 				if ( !next.length ) {
+// 					next = $(this).siblings(':first');
+// 				}
+// 				next.children(':first-child').clone().appendTo( $(this) );
+// 				// Agrupar slides (view).
+// 				for ( var i=0;i<view;i++ ) {
+// 					next = next.next();
+// 					if ( !next.length ) {
+// 						next = $(this).siblings(':first');
+// 					}
+// 					next.children(':first-child').clone().appendTo( $(this) );
+// 				}
+// 			});
+
+// 		});
+
+// 	});
+
+// }
