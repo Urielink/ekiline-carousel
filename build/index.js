@@ -403,7 +403,6 @@ function Edit(props) {
   }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarItem"], {
     as: _wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"],
     onClick: function onClick() {
-      console.log('.' + boxClass + ' .carousel-multiple');
       transformarCarrusel('.' + boxClass + ' .carousel-multiple');
     }
   }, "preview"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {

@@ -188,8 +188,7 @@ export default function Edit(props) {
 					<ToolbarItem 
 						as={ Button }
 						onClick={ () => {
-							console.log( '.'+ boxClass +' .carousel-multiple' );
-							transformarCarrusel('.'+ boxClass +' .carousel-multiple');
+							transformarCarrusel( '.'+ boxClass +' .carousel-multiple' );
 						} }
 					>preview</ToolbarItem>
 				</ToolbarGroup>
