@@ -237,7 +237,7 @@ function Edit(props) {
       setAttributes = props.setAttributes,
       _props$blockProps = props.blockProps,
       blockProps = _props$blockProps === void 0 ? Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])() : _props$blockProps;
-  var boxClass = 'ekiline-carousel-box ' + attributes.SetColumns + 'column bg-dark p-' + attributes.SetColumns;
+  var boxClass = setClassName();
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Contenido de carrusel",
     initialOpen: false
@@ -400,12 +400,65 @@ function Edit(props) {
         SetAnimation: SetAnimation
       });
     }
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default.a, {
-    block: "ekiline-blocks/ekiline-carousel",
-    attributes: props.attributes,
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarItem"], {
+    as: _wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"],
+    onClick: function onClick() {
+      console.log('.' + boxClass + ' .carousel-multiple');
+      transformarCarrusel('.' + boxClass + ' .carousel-multiple');
+    }
+  }, "preview"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: boxClass
-  }));
-} // probar el if en conjunto al serversiderender
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default.a, {
+    block: "ekiline-blocks/ekiline-carousel",
+    attributes: props.attributes
+  })));
+} // Establecer el nombre del contenedor.
+
+function setClassName() {
+  var rand = Math.floor(Math.random() * 100) + 1,
+      name = 'ekiline-carousel-box-' + rand + '-col';
+  return name;
+} // // ejecutar preview
+// function transformarCarrusel(carrusel){
+// 	jQuery(document).ready(function( $ ) {
+// 		if ( 0 === $(carrusel).length ) {
+// 			return;
+// 		}
+// 		$(carrusel).each(function(){
+// 			// Vistas, columnas y grupo.
+// 			var params = [ ['x2','6','0'],['x3','4','1'],['x4','3','2'],['x6','2','4'] ];
+// 			var view, item;
+// 			// Envoltorio extra para agrupar.
+// 			for ( var i = 0; i < params.length; i++ ) {
+// 				if ( $(this).hasClass( params[i][0] ) ){
+// 					item = params[i][1];
+// 					view = params[i][2];
+// 				}
+// 			}
+// 			// Items envoltorio.
+// 			$(this).find('.carousel-item').each(function(){
+// 				$(this).children().wrapAll('<figure class="col-md-' + item + '">','</figure>');
+// 			});
+// 			// Loop grupos.
+// 			$(this).find( '.carousel-item').each(function(){
+// 				// Copiar el primer slide y agregarlo.
+// 				var next = $(this).next();
+// 				if ( !next.length ) {
+// 					next = $(this).siblings(':first');
+// 				}
+// 				next.children(':first-child').clone().appendTo( $(this) );
+// 				// Agrupar slides (view).
+// 				for ( var i=0;i<view;i++ ) {
+// 					next = next.next();
+// 					if ( !next.length ) {
+// 						next = $(this).siblings(':first');
+// 					}
+// 					next.children(':first-child').clone().appendTo( $(this) );
+// 				}
+// 			});
+// 		});
+// 	});
+// }
 
 /***/ }),
 
