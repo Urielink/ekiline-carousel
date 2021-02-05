@@ -413,52 +413,13 @@ function Edit(props) {
     attributes: props.attributes
   })));
 } // Establecer el nombre del contenedor.
+// averiguar como mejorar esto.
 
 function setClassName() {
   var rand = Math.floor(Math.random() * 100) + 1,
       name = 'ekiline-carousel-box-' + rand + '-col';
   return name;
-} // // ejecutar preview
-// function transformarCarrusel(carrusel){
-// 	jQuery(document).ready(function( $ ) {
-// 		if ( 0 === $(carrusel).length ) {
-// 			return;
-// 		}
-// 		$(carrusel).each(function(){
-// 			// Vistas, columnas y grupo.
-// 			var params = [ ['x2','6','0'],['x3','4','1'],['x4','3','2'],['x6','2','4'] ];
-// 			var view, item;
-// 			// Envoltorio extra para agrupar.
-// 			for ( var i = 0; i < params.length; i++ ) {
-// 				if ( $(this).hasClass( params[i][0] ) ){
-// 					item = params[i][1];
-// 					view = params[i][2];
-// 				}
-// 			}
-// 			// Items envoltorio.
-// 			$(this).find('.carousel-item').each(function(){
-// 				$(this).children().wrapAll('<figure class="col-md-' + item + '">','</figure>');
-// 			});
-// 			// Loop grupos.
-// 			$(this).find( '.carousel-item').each(function(){
-// 				// Copiar el primer slide y agregarlo.
-// 				var next = $(this).next();
-// 				if ( !next.length ) {
-// 					next = $(this).siblings(':first');
-// 				}
-// 				next.children(':first-child').clone().appendTo( $(this) );
-// 				// Agrupar slides (view).
-// 				for ( var i=0;i<view;i++ ) {
-// 					next = next.next();
-// 					if ( !next.length ) {
-// 						next = $(this).siblings(':first');
-// 					}
-// 					next.children(':first-child').clone().appendTo( $(this) );
-// 				}
-// 			});
-// 		});
-// 	});
-// }
+}
 
 /***/ }),
 
