@@ -526,9 +526,25 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
    * These can be any of WordPress’ Dashicons, or a custom svg element.
    */
   icon: 'slides',
+
+  /**
+   * Optional block extended support features.
+   * https://developer.wordpress.org/block-editor/developers/block-api/block-supports/
+   */
+  supports: {
+    // Removes support for an HTML mode.
+    html: false,
+    // Ancho de modulo
+    align: ['wide', 'full']
+  },
   // Pasar argumentos.
   attributes: {
-    //toolbar
+    // toolbar
+    align: {
+      type: 'string',
+      default: ''
+    },
+    // panel
     ChooseType: {
       type: 'string',
       default: 'posts'
@@ -577,16 +593,6 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
       type: 'string',
       default: ''
     }
-  },
-
-  /**
-   * Optional block extended support features.
-   */
-  supports: {
-    // Removes support for an HTML mode.
-    html: false,
-    // Ancho de modulo
-    align: ['wide', 'full']
   },
 
   /**
