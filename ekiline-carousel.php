@@ -61,6 +61,11 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 		// Se agreagn los atributos para el renderizado.
 		'attributes' => [
 			// toolbar
+			'align' => [
+				'type' => 'string',
+				'default' => '',
+			],
+			// panel
 			'ChooseType' => [
 				'type' => 'string',
 				'default' => 'posts',
@@ -168,7 +173,12 @@ function gutenberg_examples_dynamic_render_callback( $block_attributes, $content
 	if ( '' !== $block_attributes['SetAnimation'] ){
 		$carousel_args .= 'animation="' . $block_attributes['SetAnimation'] . '" ';
 	}
+	// Nuevo arreglo, clase wide y full en toolbar.
+	$align = '';
+	if ( '' !== $block_attributes['align'] ){
+		$align = ' class="align' . $block_attributes['align'] . '"';
+	}
 
-	$carousel = do_shortcode('[ekiline-carousel ' . $carousel_args . ']');
+	$carousel = '<div' . $align . '>' . do_shortcode('[ekiline-carousel ' . $carousel_args . ']') . '</div>';
 	return $carousel;
 }

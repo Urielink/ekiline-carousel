@@ -64,9 +64,25 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 	 */
 	icon: 'slides',
 
+	/**
+	 * Optional block extended support features.
+	 * https://developer.wordpress.org/block-editor/developers/block-api/block-supports/
+	 */
+	supports: {
+		// Removes support for an HTML mode.
+		html: false,
+		// Ancho de modulo
+		align: ['wide', 'full'],
+	},
+
 	// Pasar argumentos.
 	attributes: {
-		//toolbar
+		// toolbar
+		align: {
+			type: 'string',
+			default: '',
+		},
+		// panel
 		ChooseType: {
 			type: 'string',
 			default: 'posts',
@@ -115,16 +131,6 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 			type: 'string',
 			default: '',
 		},
-	},
-
-	/**
-	 * Optional block extended support features.
-	 */
-	supports: {
-		// Removes support for an HTML mode.
-		html: false,
-		// Ancho de modulo
-		align: ['wide', 'full'],
 	},
 
 	/**
