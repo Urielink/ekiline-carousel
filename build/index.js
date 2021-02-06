@@ -224,6 +224,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
+ * Funciones propias
+ *
+ * Classname dinamica para el envoltorio del carrusel.
+ * @return {name} clase de apoyo para manipular el item con js del tema.
+ */
+
+function setClassName() {
+  var rand = Math.floor(Math.random() * 100) + 1,
+      name = 'ekiline-box-' + rand + '-wrapper';
+  return name;
+}
+/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -231,6 +243,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @return {WPElement} Element to render.
  */
+
 
 function Edit(props) {
   var attributes = props.attributes,
@@ -402,22 +415,17 @@ function Edit(props) {
     }
   }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarItem"], {
     as: _wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"],
+    icon: "dashicons dashicons-visibility",
+    title: "Preview",
     onClick: function onClick() {
       transformarCarrusel('.' + boxClass + ' .carousel-multiple');
     }
-  }, "preview"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: boxClass
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default.a, {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default.a, {
     block: "ekiline-blocks/ekiline-carousel",
     attributes: props.attributes
-  })));
-} // Establecer el nombre del contenedor.
-// averiguar como mejorar esto.
-
-function setClassName() {
-  var rand = Math.floor(Math.random() * 100) + 1,
-      name = 'ekiline-carousel-box-' + rand + '-col';
-  return name;
+  }))));
 }
 
 /***/ }),

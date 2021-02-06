@@ -30,6 +30,19 @@ import ServerSideRender from '@wordpress/server-side-render';
 import './editor.scss';
 
 /**
+ * Funciones propias
+ *
+ * Classname dinamica para el envoltorio del carrusel.
+ * @return {name} clase de apoyo para manipular el item con js del tema.
+ */
+function setClassName() {
+	const rand = Math.floor(Math.random() * 100) + 1,
+	name = 'ekiline-box-' + rand + '-wrapper';
+	return name;
+}
+
+
+/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -187,28 +200,28 @@ export default function Edit(props) {
 				<ToolbarGroup>
 					<ToolbarItem 
 						as={ Button }
+						icon="dashicons dashicons-visibility"
+						title="Preview"
 						onClick={ () => {
 							transformarCarrusel( '.'+ boxClass +' .carousel-multiple' );
 						} }
-					>preview</ToolbarItem>
+					/>
 				</ToolbarGroup>
 			</BlockControls>
 
+			{/**
+			 * Un div intermedio entre bloque y delimitador aparentemente
+			 * detiene la sobreejecucion de boxClass por is-hovered.
+			 */}
 			<div className={ boxClass }>
-				<ServerSideRender
-					block="ekiline-blocks/ekiline-carousel"
-					attributes={ props.attributes }
-				/>
+				<div>
+					<ServerSideRender
+						block="ekiline-blocks/ekiline-carousel"
+						attributes={ props.attributes }
+					/>
+				</div>
 			</div>
 
 		</div>
 	);
-}
-
-// Establecer el nombre del contenedor.
-// averiguar como mejorar esto.
-function setClassName() {
-	const rand = Math.floor(Math.random() * 100) + 1,
-	name = 'ekiline-carousel-box-' + rand + '-col';
-	return name;
 }
