@@ -47,6 +47,7 @@ function setClassName() {
  * @ref https://wordpress.stackexchange.com/questions/372134/gutenberg-block-get-categories-in-selectcontrol
  * @ref https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
  * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
+ * @ref https://developer.wordpress.org/block-editor/components/select-control/
  * Finalmente solo se requiere inicializar el metodo.
  */
 wp.data.select('core').getEntityRecords('taxonomy', 'category', {per_page: -1})
@@ -88,10 +89,12 @@ export default function Edit(props) {
 					{/* Selector de categorias o insertar imagenes */}
                     { 'posts' === attributes.ChooseType &&
 						<SelectControl
+							multiple  // multiples valores seleccionados.
 							label="Selecciona la categoria"
 							value={attributes.SetIds}
 							options={ RetrieveCategories }
 							onChange={(newval) => setAttributes({ SetIds:newval })}
+							style={ { height: '150px' } }
 						/>
 					}
 					{ 'images' === attributes.ChooseType &&

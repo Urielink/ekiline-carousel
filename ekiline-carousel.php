@@ -71,7 +71,7 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 				'default' => 'posts',
 			],
 			'SetIds' => [
-				'type' => 'string',
+				'type' => 'array', // multiples valores seleccionados.
 				'default' => '',
 			],
 			'SetAmount' => [
@@ -136,7 +136,9 @@ function gutenberg_examples_dynamic_render_callback( $block_attributes, $content
 	}
 
 	if ( $block_attributes['SetIds'] ) {
-		$carousel_args .= 'id="' . $block_attributes['SetIds'] . '" ';
+		// fue necesario cambiar el tipo de dato a array para permitir seleccionar varias categorias.
+		$array_to_string = implode( ",", $block_attributes['SetIds'] );
+		$carousel_args  .= 'id="' . $array_to_string . '" ';
 	}
 
 	if ( '3' !==  $block_attributes['SetAmount'] && 'posts' === $block_attributes['ChooseType'] ){

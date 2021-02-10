@@ -88,7 +88,7 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 			default: 'posts',
 		},
 		SetIds:{
-			type: 'string',
+			type: 'array',  // multiples valores seleccionados.
 			default: '',
 		},
 		SetAmount:{
