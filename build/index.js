@@ -236,6 +236,20 @@ function setClassName() {
   return name;
 }
 /**
+ * Componente para ocupar las categorias.
+ * Existen varios ejercicios.
+ * @ref https://wordpress.stackexchange.com/questions/372134/gutenberg-block-get-categories-in-selectcontrol
+ * @ref https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
+ * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
+ * @ref https://developer.wordpress.org/block-editor/components/select-control/
+ * Finalmente solo se requiere inicializar el metodo.
+ */
+
+
+wp.data.select('core').getEntityRecords('taxonomy', 'category', {
+  per_page: -1
+});
+/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -244,13 +258,22 @@ function setClassName() {
  * @return {WPElement} Element to render.
  */
 
-
 function Edit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes,
       _props$blockProps = props.blockProps,
       blockProps = _props$blockProps === void 0 ? Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])() : _props$blockProps;
   var boxClass = setClassName();
+  var RetrieveCategories = wp.data.select('core').getEntityRecords('taxonomy', 'category', {
+    per_page: -1
+  }).map(function (_ref) {
+    var id = _ref.id,
+        name = _ref.name;
+    return {
+      label: name,
+      value: id
+    };
+  });
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Contenido de carrusel",
     initialOpen: false
@@ -269,8 +292,22 @@ function Edit(props) {
         ChooseType: ChooseType
       });
     }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Inserta IDs", 'ekiline'),
+  }), 'posts' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+    multiple: true // multiples valores seleccionados.
+    ,
+    label: "Selecciona la categoria",
+    value: attributes.SetIds,
+    options: RetrieveCategories,
+    onChange: function onChange(newval) {
+      return setAttributes({
+        SetIds: newval
+      });
+    },
+    style: {
+      height: '150px'
+    }
+  }), 'images' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Inserta IDs imagenes", 'ekiline'),
     value: attributes.SetIds // variable
     ,
     onChange: function onChange(newval) {
@@ -550,7 +587,8 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('eki
       default: 'posts'
     },
     SetIds: {
-      type: 'string',
+      type: 'array',
+      // multiples valores seleccionados.
       default: ''
     },
     SetAmount: {
