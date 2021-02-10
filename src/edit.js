@@ -36,10 +36,20 @@ import './editor.scss';
  * @return {name} clase de apoyo para manipular el item con js del tema.
  */
 function setClassName() {
-	const rand = Math.floor(Math.random() * 100) + 1,
-	name = 'ekiline-box-' + rand + '-wrapper';
-	return name;
+    const rand = Math.floor(Math.random() * 100) + 1,
+    name = 'ekiline-box-' + rand + '-wrapper';
+    return name;
 }
+
+/**
+ * Componente para ocupar las categorias.
+ * Existen varios ejercicios.
+ * @ref https://wordpress.stackexchange.com/questions/372134/gutenberg-block-get-categories-in-selectcontrol
+ * @ref https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
+ * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
+ * Finalmente solo se requiere inicializar el metodo.
+ */
+wp.data.select('core').getEntityRecords('taxonomy', 'category', {per_page: -1})
 
 
 /**
@@ -52,176 +62,190 @@ function setClassName() {
  */
 export default function Edit(props) {
 
-	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
-	const boxClass = setClassName();
+    const { attributes, setAttributes, blockProps = useBlockProps() } = props;
+    const boxClass = setClassName();
+	const RetrieveCategories = wp.data.select('core').getEntityRecords('taxonomy', 'category',{per_page: -1}).map(({id, name}) => ({label: name, value: id}));
 
-	return (
-		<div {...blockProps}>
+    return (
+        <div {...blockProps}>
 
-			<InspectorControls>
-				<PanelBody
-					title="Contenido de carrusel"
-					initialOpen={false}
-				>
-					{/* Atributos OK */}
-					<SelectControl
-						label="Tipo de contenido"
-						value={attributes.ChooseType}
-						options={[
-							{label: "Posts", value: 'posts'},
-							{label: "Images", value: 'images'},
-						]}
-						onChange={(ChooseType) => setAttributes({ ChooseType })}
-					/>
+            <InspectorControls>
+                <PanelBody
+                    title="Contenido de carrusel"
+                    initialOpen={false}
+                >
+                    {/* Atributos OK */}
+                    <SelectControl
+                        label="Tipo de contenido"
+                        value={attributes.ChooseType}
+                        options={[
+                            {label: "Posts", value: 'posts'},
+                            {label: "Images", value: 'images'},
+                        ]}
+                        onChange={(ChooseType) => setAttributes({ ChooseType })}
+                    />
 
-					<TextControl
-						label={__("Inserta IDs", 'ekiline')}
-						value={attributes.SetIds} // variable
-						onChange={(newval) => setAttributes({ SetIds:newval })}
-					/>
-
-					{/* Mostrar solo cuando sean posts */}
-					{ 'posts' === attributes.ChooseType &&
+					{/* Selector de categorias o insertar imagenes */}
+                    { 'posts' === attributes.ChooseType &&
+						<SelectControl
+							label="Selecciona la categoria"
+							value={attributes.SetIds}
+							options={ RetrieveCategories }
+							onChange={(newval) => setAttributes({ SetIds:newval })}
+						/>
+					}
+					{ 'images' === attributes.ChooseType &&
 						<TextControl
-							label={__("¿Cuantas publicaciones?", 'ekiline')}
-							type="number"
-							value={attributes.SetAmount} // variable
-							onChange={(newval) => setAttributes({ SetAmount: parseInt(newval) })}
+							label={__("Inserta IDs imagenes", 'ekiline')}
+							value={attributes.SetIds} // variable
+							onChange={(newval) => setAttributes({ SetIds:newval })}
 						/>
 					}
 
-					{/* Mostrar solo cuando sean posts */}
-					{ 'posts' === attributes.ChooseType &&
-						<SelectControl
-							label="Organizar por:"
-							value={attributes.SetOrderBy}
-							options={[
-								{label: "Date", value: 'date'},
-								{label: "Modified", value: 'modified'},
-								{label: "Title", value: 'title'},
-								{label: "Name", value: 'name'},
-								{label: "Author", value: 'author'},
-								{label: "Rand", value: 'rand'},
-							]}
-							onChange={(SetOrderBy) => setAttributes({ SetOrderBy })}
-						/>
-					}
 
-					{/** 
-					 * Buscar bloques existentes.
-					 * https://developer.wordpress.org/reference/functions/get_dynamic_block_names/
-					 */}
+                    {/* Mostrar solo cuando sean posts */}
+                    { 'posts' === attributes.ChooseType &&
+                        <TextControl
+                            label={__("¿Cuantas publicaciones?", 'ekiline')}
+                            type="number"
+                            value={attributes.SetAmount} // variable
+                            onChange={(newval) => setAttributes({ SetAmount: parseInt(newval) })}
+                        />
+                    }
 
-					{/* Mostrar solo cuando sean posts */}
-					{ 'posts' === attributes.ChooseType &&
-						<SelectControl
-							label={__("Buscar un bloque en un post", 'ekiline')}
-							value={attributes.FindBlock}
-							options={[
-								{label: "None", value: 'none'},
-								{label: "Block", value: 'core/block'},
-								{label: "Comments", value: 'core/latest-comments'},
-								{label: "Archives", value: 'core/archives'},
-								{label: "Cover", value: 'core/cover'},
-							]}
-							onChange={(FindBlock) => setAttributes({ FindBlock })}
-						/>
-					}
+                    {/* Mostrar solo cuando sean posts */}
+                    { 'posts' === attributes.ChooseType &&
+                        <SelectControl
+                            label="Organizar por:"
+                            value={attributes.SetOrderBy}
+                            options={[
+                                {label: "Date", value: 'date'},
+                                {label: "Modified", value: 'modified'},
+                                {label: "Title", value: 'title'},
+                                {label: "Name", value: 'name'},
+                                {label: "Author", value: 'author'},
+                                {label: "Rand", value: 'rand'},
+                            ]}
+                            onChange={(SetOrderBy) => setAttributes({ SetOrderBy })}
+                        />
+                    }
 
-					{/* Mostrar solo cuando el bloque es buscado */}
-					{ 'none' !== attributes.FindBlock &&
-						<ToggleControl
-							label={__("Si no hay bloque, permitir ver publicacion", 'ekiline')}
-							checked={attributes.AllowMixed}
-							onChange={(AllowMixed) => setAttributes({ AllowMixed })}
-						/>
-					}
+                    {/** 
+                     * Buscar bloques existentes.
+                     * https://developer.wordpress.org/reference/functions/get_dynamic_block_names/
+                     */}
 
-				</PanelBody>
+                    {/* Mostrar solo cuando sean posts */}
+                    { 'posts' === attributes.ChooseType &&
+                        <SelectControl
+                            label={__("Buscar un bloque en un post", 'ekiline')}
+                            value={attributes.FindBlock}
+                            options={[
+                                {label: "None", value: 'none'},
+                                {label: "Block", value: 'core/block'},
+                                {label: "Comments", value: 'core/latest-comments'},
+                                {label: "Archives", value: 'core/archives'},
+                                {label: "Cover", value: 'core/cover'},
+                            ]}
+                            onChange={(FindBlock) => setAttributes({ FindBlock })}
+                        />
+                    }
 
-				<PanelBody
-					title="Vista de carrusel"
-					initialOpen={true}
-				>
+                    {/* Mostrar solo cuando el bloque es buscado */}
+                    { 'none' !== attributes.FindBlock &&
+                        <ToggleControl
+                            label={__("Si no hay bloque, permitir ver publicacion", 'ekiline')}
+                            checked={attributes.AllowMixed}
+                            onChange={(AllowMixed) => setAttributes({ AllowMixed })}
+                        />
+                    }
 
-					<RangeControl
-						label={__("Columnas", 'ekiline')}
-						value={attributes.SetColumns} // variable
-						onChange={(newval) => setAttributes({ SetColumns: parseInt(newval) })}
-						min={ 1 }
-						max={ 4 }
-					/>
+                </PanelBody>
 
-					<ToggleControl
-						label={__("Mostrar controles", 'ekiline')}
-						checked={attributes.AddControls}
-						onChange={(AddControls) => setAttributes({ AddControls })}
-					/>
+                <PanelBody
+                    title="Vista de carrusel"
+                    initialOpen={true}
+                >
 
-					<ToggleControl
-						label={__("Mostrar indicadores", 'ekiline')}
-						checked={attributes.AddIndicators}
-						onChange={(AddIndicators) => setAttributes({ AddIndicators })}
-					/>
+                    <RangeControl
+                        label={__("Columnas", 'ekiline')}
+                        value={attributes.SetColumns} // variable
+                        onChange={(newval) => setAttributes({ SetColumns: parseInt(newval) })}
+                        min={ 1 }
+                        max={ 4 }
+                    />
 
-					<ToggleControl
-						label={__("Iniciar automáticamente", 'ekiline')}
-						checked={attributes.SetAuto}
-						onChange={(SetAuto) => setAttributes({ SetAuto })}
-					/>
+                    <ToggleControl
+                        label={__("Mostrar controles", 'ekiline')}
+                        checked={attributes.AddControls}
+                        onChange={(AddControls) => setAttributes({ AddControls })}
+                    />
 
-					<TextControl
-						label={__("Transición en milisegundos", 'ekiline')}
-						type="number"
-						value={attributes.SetTime} // variable
-						onChange={(newval) => setAttributes({ SetTime: parseInt(newval) })}
-					/>
+                    <ToggleControl
+                        label={__("Mostrar indicadores", 'ekiline')}
+                        checked={attributes.AddIndicators}
+                        onChange={(AddIndicators) => setAttributes({ AddIndicators })}
+                    />
 
-					<SelectControl
-						label={__("Tipo de animacion", 'ekiline')}
-						value={attributes.SetAnimation}
-						options={[
-							{label: "Default", value: ''},
-							{label: "Fade", value: 'fade'},
-							{label: "Vertical", value: 'vertical'},
-						]}
-						onChange={(SetAnimation) => setAttributes({ SetAnimation })}
-					/>
+                    <ToggleControl
+                        label={__("Iniciar automáticamente", 'ekiline')}
+                        checked={attributes.SetAuto}
+                        onChange={(SetAuto) => setAttributes({ SetAuto })}
+                    />
 
-				</PanelBody>
+                    <TextControl
+                        label={__("Transición en milisegundos", 'ekiline')}
+                        type="number"
+                        value={attributes.SetTime} // variable
+                        onChange={(newval) => setAttributes({ SetTime: parseInt(newval) })}
+                    />
 
-			</InspectorControls>
+                    <SelectControl
+                        label={__("Tipo de animacion", 'ekiline')}
+                        value={attributes.SetAnimation}
+                        options={[
+                            {label: "Default", value: ''},
+                            {label: "Fade", value: 'fade'},
+                            {label: "Vertical", value: 'vertical'},
+                        ]}
+                        onChange={(SetAnimation) => setAttributes({ SetAnimation })}
+                    />
 
-			{/**
-			 * Agregar un boton al control de bloque
-			 * https://developer.wordpress.org/block-editor/components/toolbar-item/
-			 * */}
-			<BlockControls>
-				<ToolbarGroup>
-					<ToolbarItem 
-						as={ Button }
-						icon="dashicons dashicons-visibility"
-						title="Preview"
-						onClick={ () => {
-							transformarCarrusel( '.'+ boxClass +' .carousel-multiple' );
-						} }
-					/>
-				</ToolbarGroup>
-			</BlockControls>
+                </PanelBody>
 
-			{/**
-			 * Un div intermedio entre bloque y delimitador aparentemente
-			 * detiene la sobreejecucion de boxClass por is-hovered.
-			 */}
-			<div className={ boxClass }>
-				<div>
-					<ServerSideRender
-						block="ekiline-blocks/ekiline-carousel"
-						attributes={ props.attributes }
-					/>
-				</div>
-			</div>
+            </InspectorControls>
 
-		</div>
-	);
+            {/**
+             * Agregar un boton al control de bloque
+             * https://developer.wordpress.org/block-editor/components/toolbar-item/
+             * */}
+            <BlockControls>
+                <ToolbarGroup>
+                    <ToolbarItem 
+                        as={ Button }
+                        icon="dashicons dashicons-visibility"
+                        title="Preview"
+                        onClick={ () => {
+                            transformarCarrusel( '.'+ boxClass +' .carousel-multiple' );
+                        } }
+                    />
+                </ToolbarGroup>
+            </BlockControls>
+
+            {/**
+             * Un div intermedio entre bloque y delimitador aparentemente
+             * detiene la sobreejecucion de boxClass por is-hovered.
+             */}
+            <div className={ boxClass }>
+                <div>
+                    <ServerSideRender
+                        block="ekiline-blocks/ekiline-carousel"
+                        attributes={ props.attributes }
+                    />
+                </div>
+            </div>
+
+        </div>
+    );
 }
+
