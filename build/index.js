@@ -251,6 +251,49 @@ wp.data.select('core').getEntityRecords('taxonomy', 'category', {
   per_page: -1
 });
 /**
+ * Componente de imagenes
+ * @ref https://github.com/WordPress/gutenberg/tree/master/packages/block-editor/src/components/media-upload;
+ * @param {*} props 
+ */
+// import { Button } from '@wordpress/components';
+
+ // const ALLOWED_MEDIA_TYPES = [ 'image' ];
+// const mediaIds = [];
+// const arrayIds = media.map(({id, name}) => ({label: name, value: id}));
+// const MyMediaUploader = () => {
+// 	return (
+// 		<MediaUploadCheck>
+// 			<MediaUpload
+//                 title={ __('Ekiline Carousel: Seleccionar imagenes') }
+// 				onSelect={ ( media ) => {
+//                     console.log( 'selected ' + media.length );
+//                     const img_ids = [];
+//                     for (let i = 0, max = media.length; i < max; i += 1) {
+//                         img_ids.push(media[i].id);
+//                     }
+//                     console.log(img_ids);
+//                     setAttributes({ SetIds:img_ids });
+//                 }
+//                 }
+// 				allowedTypes={ [ 'image' ] }
+//                 multiple={ true }
+// 				// value={ mediaIds }
+// 				render={ ( { open } ) => (
+// 					<Button
+//                         isSecondary
+//                         onClick={ open }
+//                     >
+// 						{__('Seleccionar imagenes')}
+// 					</Button>
+// 				) }
+//                 gallery={false}
+//                 addToGallery={false}
+// 			/>
+// 		</MediaUploadCheck>
+// 	);
+// };
+
+/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -277,7 +320,7 @@ function Edit(props) {
   });
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Contenido de carrusel",
-    initialOpen: false
+    initialOpen: true
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
     label: "Tipo de contenido",
     value: attributes.ChooseType,
@@ -307,16 +350,35 @@ function Edit(props) {
     style: {
       height: '150px'
     }
-  }), 'images' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Inserta IDs imagenes", 'ekiline'),
-    value: attributes.SetIds // variable
-    ,
-    onChange: function onChange(newval) {
-      return setAttributes({
-        SetIds: newval
+  }), 'images' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
+    title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Ekiline Carousel: Seleccionar imagenes'),
+    onSelect: function onSelect(media) {
+      // console.log( 'selected ' + media.length );
+      var img_ids = [];
+
+      for (var i = 0, max = media.length; i < max; i += 1) {
+        img_ids.push(media[i].id);
+      } // console.log(img_ids);
+
+
+      setAttributes({
+        SetIds: img_ids
       });
-    }
-  }), 'posts' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
+    },
+    allowedTypes: ['image'],
+    multiple: true // value={ mediaIds }
+    ,
+    value: attributes.SetIds,
+    render: function render(_ref2) {
+      var open = _ref2.open;
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+        isSecondary: true,
+        onClick: open
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Seleccionar imagenes'));
+    },
+    gallery: false,
+    addToGallery: false
+  })), 'posts' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("¿Cuantas publicaciones?", 'ekiline'),
     type: "number",
     value: attributes.SetAmount // variable
@@ -387,7 +449,7 @@ function Edit(props) {
     }
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Vista de carrusel",
-    initialOpen: true
+    initialOpen: false
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Columnas", 'ekiline'),
     value: attributes.SetColumns // variable
