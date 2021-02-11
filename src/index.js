@@ -72,7 +72,7 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 		// Removes support for an HTML mode.
 		html: false,
 		// Ancho de modulo
-		align: ['wide', 'full'],
+		align: [ 'wide', 'full' ],
 	},
 
 	// Pasar argumentos.
@@ -87,47 +87,47 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 			type: 'string',
 			default: 'posts',
 		},
-		SetIds:{
-			type: 'array',  // multiples valores seleccionados.
+		SetIds: {
+			type: 'array', // multiples valores seleccionados.
 			default: '',
 		},
-		SetAmount:{
+		SetAmount: {
 			type: 'number',
 			default: 3,
 		},
-		SetOrderBy:{
+		SetOrderBy: {
 			type: 'string',
 			default: 'date',
 		},
-		SetColumns:{
+		SetColumns: {
 			type: 'number',
 			default: 1,
 		},
-		FindBlock:{
+		FindBlock: {
 			type: 'string',
 			default: 'none',
 		},
-		AllowMixed:{
+		AllowMixed: {
 			type: 'boolean',
 			default: false,
 		},
-		AddControls:{
+		AddControls: {
 			type: 'boolean',
 			default: true,
 		},
-		AddIndicators:{
+		AddIndicators: {
 			type: 'boolean',
 			default: true,
 		},
-		SetAuto:{
+		SetAuto: {
 			type: 'boolean',
 			default: true,
 		},
-		SetTime:{
+		SetTime: {
 			type: 'number',
-			default: '5000'
+			default: '5000',
 		},
-		SetAnimation:{
+		SetAnimation: {
 			type: 'string',
 			default: '',
 		},
@@ -142,11 +142,16 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 	 * @see ./save.js
 	 */
 	// save,
-	save: () => { return null }
+	save: () => {
+		return null;
+	},
 } );
 
 /**
  * Incorporar bloque a una coleccion.
  */
 import { registerBlockCollection } from '@wordpress/blocks';
-registerBlockCollection( 'ekiline-blocks', { title: 'Ekiline blocks', icon: 'layout' } );
+registerBlockCollection( 'ekiline-blocks', {
+	title: 'Ekiline blocks',
+	icon: 'layout',
+} );
