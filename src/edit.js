@@ -53,6 +53,52 @@ function setClassName() {
  */
 wp.data.select('core').getEntityRecords('taxonomy', 'category', {per_page: -1});
 
+/**
+ * Componente de imagenes
+ * @ref https://github.com/WordPress/gutenberg/tree/master/packages/block-editor/src/components/media-upload;
+ * @param {*} props 
+ */
+// import { Button } from '@wordpress/components';
+import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
+
+// const ALLOWED_MEDIA_TYPES = [ 'image' ];
+// const mediaIds = [];
+// const arrayIds = media.map(({id, name}) => ({label: name, value: id}));
+
+// const MyMediaUploader = () => {
+
+// 	return (
+// 		<MediaUploadCheck>
+// 			<MediaUpload
+//                 title={ __('Ekiline Carousel: Seleccionar imagenes') }
+// 				onSelect={ ( media ) => {
+//                     console.log( 'selected ' + media.length );
+
+//                     const img_ids = [];
+//                     for (let i = 0, max = media.length; i < max; i += 1) {
+//                         img_ids.push(media[i].id);
+//                     }
+//                     console.log(img_ids);
+//                     setAttributes({ SetIds:img_ids });
+//                 }
+//                 }
+// 				allowedTypes={ [ 'image' ] }
+//                 multiple={ true }
+// 				// value={ mediaIds }
+// 				render={ ( { open } ) => (
+// 					<Button
+//                         isSecondary
+//                         onClick={ open }
+//                     >
+// 						{__('Seleccionar imagenes')}
+// 					</Button>
+// 				) }
+//                 gallery={false}
+//                 addToGallery={false}
+// 			/>
+// 		</MediaUploadCheck>
+// 	);
+// };
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -74,7 +120,7 @@ export default function Edit(props) {
             <InspectorControls>
                 <PanelBody
                     title="Contenido de carrusel"
-                    initialOpen={false}
+                    initialOpen={true}
                 >
                     {/* Atributos OK */}
                     <SelectControl
@@ -98,14 +144,46 @@ export default function Edit(props) {
 							style={ { height: '150px' } }
 						/>
 					}
-					{ 'images' === attributes.ChooseType &&
+
+					{/* { 'images' === attributes.ChooseType &&
 						<TextControl
 							label={__("Inserta IDs imagenes", 'ekiline')}
 							value={attributes.SetIds} // variable
 							onChange={(newval) => setAttributes({ SetIds:newval })}
 						/>
-					}
+					} */}
 
+                    { 'images' === attributes.ChooseType &&
+                        <MediaUploadCheck>
+                            <MediaUpload
+                                title={ __('Ekiline Carousel: Seleccionar imagenes') }
+                                onSelect={ ( media ) => {
+                                        // console.log( 'selected ' + media.length );
+                                        const img_ids = [];
+                                        for (let i = 0, max = media.length; i < max; i += 1) {
+                                            img_ids.push(media[i].id);
+                                        }
+                                        // console.log(img_ids);
+                                        setAttributes({ SetIds:img_ids });
+                                    }
+                                }
+                                allowedTypes={ [ 'image' ] }
+                                multiple={ true }
+                                // value={ mediaIds }
+                                value={ attributes.SetIds }
+                                render={ ( { open } ) => (
+                                    <Button
+                                        isSecondary
+                                        onClick={ open }
+                                    >
+                                    {__('Seleccionar imagenes')}
+                                    </Button>
+                                ) }
+                                gallery={false}
+                                addToGallery={false}
+                            />
+                        </MediaUploadCheck>
+                    }
 
                     {/* Mostrar solo cuando sean posts */}
                     { 'posts' === attributes.ChooseType &&
@@ -168,7 +246,7 @@ export default function Edit(props) {
 
                 <PanelBody
                     title="Vista de carrusel"
-                    initialOpen={true}
+                    initialOpen={false}
                 >
 
                     <RangeControl
