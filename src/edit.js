@@ -65,9 +65,9 @@ function setClassName() {
  * @ref https://developer.wordpress.org/block-editor/components/select-control/
  * Finalmente solo se requiere inicializar el metodo.
  */
-wp.data
-	.select( 'core' )
-	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } );
+// wp.data
+// 	.select( 'core' )
+// 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } );
 
 /**
  * Componente de imagenes
