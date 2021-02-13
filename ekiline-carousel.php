@@ -36,26 +36,26 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 	);
 	wp_set_script_translations( 'ekiline-blocks-ekiline-carousel-block-editor', 'ekiline-carousel' );
 
-	// $editor_css = 'build/index.css';
-	// wp_register_style(
-	// 	'ekiline-blocks-ekiline-carousel-block-editor',
-	// 	plugins_url( $editor_css, __FILE__ ),
-	// 	array(),
-	// 	filemtime( "$dir/$editor_css" )
-	// );
+	$editor_css = 'build/index.css';
+	wp_register_style(
+		'ekiline-blocks-ekiline-carousel-block-editor',
+		plugins_url( $editor_css, __FILE__ ),
+		array(),
+		filemtime( "$dir/$editor_css" )
+	);
 
-	// $style_css = 'build/style-index.css';
-	// wp_register_style(
-	// 	'ekiline-blocks-ekiline-carousel-block',
-	// 	plugins_url( $style_css, __FILE__ ),
-	// 	array(),
-	// 	filemtime( "$dir/$style_css" )
-	// );
+	$style_css = 'build/style-index.css';
+	wp_register_style(
+		'ekiline-blocks-ekiline-carousel-block',
+		plugins_url( $style_css, __FILE__ ),
+		array(),
+		filemtime( "$dir/$style_css" )
+	);
 
 	register_block_type( 'ekiline-blocks/ekiline-carousel', array(
 		'editor_script' => 'ekiline-blocks-ekiline-carousel-block-editor',
-		// 'editor_style'  => 'ekiline-blocks-ekiline-carousel-block-editor',
-		// 'style'         => 'ekiline-blocks-ekiline-carousel-block',
+		'editor_style'  => 'ekiline-blocks-ekiline-carousel-block-editor',
+		'style'         => 'ekiline-blocks-ekiline-carousel-block',
 		// Render call back crea el objeto en el front.
 		'render_callback' => 'gutenberg_examples_dynamic_render_callback',
 		// Se agreagn los atributos para el renderizado.
