@@ -69,6 +69,11 @@ function setClassName() {
 // 	.select( 'core' )
 // 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } );
 
+// Nueva prueba, corregir la obtencion de datos.
+
+
+
+
 /**
  * Componente de imagenes
  * Requiere: Button, MediaUpload, MediaUploadCheck

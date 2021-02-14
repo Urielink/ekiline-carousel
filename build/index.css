@@ -1,1 +1,10 @@
-.wp-block-ekiline-blocks-ekiline-carousel{border:1px dotted #ddd}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-ekiline-blocks-ekiline-carousel {
+  border: 1px dotted #ddd;
+}
+
+/*# sourceMappingURL=index.css.map*/
