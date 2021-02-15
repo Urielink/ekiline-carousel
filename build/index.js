@@ -288,9 +288,9 @@ function Edit(props) {
       setAttributes = props.setAttributes,
       _props$blockProps = props.blockProps,
       blockProps = _props$blockProps === void 0 ? Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])() : _props$blockProps;
-  var boxClass = setClassName(); // revisar como crear este componente fuera de la fucncion principal.
+  var boxClass = setClassName(); // Componente dinamico: categorias.
 
-  var MyCategoryListBase = function MyCategoryListBase(_ref) {
+  var MyCategoryList = function MyCategoryList(_ref) {
     var categories = _ref.categories;
 
     if (categories) {
@@ -326,7 +326,7 @@ function Edit(props) {
         per_page: -1
       })
     };
-  })(MyCategoryListBase);
+  })(MyCategoryList);
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Contenido de carrusel",
     initialOpen: true

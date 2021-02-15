@@ -104,8 +104,8 @@ export default function Edit( props ) {
 	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
 	const boxClass = setClassName();
 
-	// revisar como crear este componente fuera de la fucncion principal.
-	const MyCategoryListBase = ( { categories } ) => {
+	// Componente dinamico: categorias.
+	const MyCategoryList = ( { categories } ) => {
 		if ( categories ){
 			return (
 				<SelectControl
@@ -131,7 +131,7 @@ export default function Edit( props ) {
 
 	const MyCategorySelect = withSelect( ( select ) => ( {
 		categories: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ),
-	} ) )( MyCategoryListBase );
+	} ) )( MyCategoryList );
 
 	return (
 		<div { ...blockProps }>
