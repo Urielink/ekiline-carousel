@@ -192,6 +192,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__);
 
 
 /**
@@ -244,11 +246,28 @@ function setClassName() {
  * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
  * @ref https://developer.wordpress.org/block-editor/components/select-control/
  * Finalmente solo se requiere inicializar el metodo.
+ *
+ * Actualizacion:
+ * Para incorporar datos dinamicos, se ocupa withSelect, que es un comoponente de wp.
+ * Hicimos varios experimentos y requiere al menos incorporar un IF ya que la carga de estos datos,
+ * puede crear un conflicto con otros plugins.
+ * 
+ * ejemplo withSelect.
+ * @ref https://developer.wordpress.org/block-editor/packages/packages-core-data/
+ * uso de rest api
+ * @ref https://developer.wordpress.org/rest-api/reference/
+ * @ref https://developer.wordpress.org/rest-api/reference/categories/
+ * crear un componente e incorporar despues con dudas
+ * @ref https://wpdev.life/using-withselect-for-wordpress-block-components/
+ * @ref https://github.com/WordPress/gutenberg/issues/14064
+ * @ref https://css-tricks.com/managing-wordpress-metadata-in-gutenberg-using-a-sidebar-plugin/
  */
 // wp.data
 // 	.select( 'core' )
 // 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } );
 // Nueva prueba, corregir la obtencion de datos.
+
+
 
 /**
  * Componente de imagenes
@@ -265,23 +284,67 @@ function setClassName() {
  * @return {WPElement} Element to render.
  */
 
-
 function Edit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes,
       _props$blockProps = props.blockProps,
       blockProps = _props$blockProps === void 0 ? Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])() : _props$blockProps;
-  var boxClass = setClassName();
-  var RetrieveCategories = wp.data.select('core').getEntityRecords('taxonomy', 'category', {
-    per_page: -1
-  }).map(function (_ref) {
-    var id = _ref.id,
-        name = _ref.name;
+  var boxClass = setClassName(); // const RetrieveCategories = wp.data
+  // 	.select( 'core' )
+  // 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } )
+  // 	.map( ( { id, name } ) => ( { label: name, value: id } ) );
+
+  var MyAuthorsListBase = function MyAuthorsListBase(_ref) {
+    var authors = _ref.authors,
+        categories = _ref.categories;
+
+    if (categories) {
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+        multiple: true // multiples valores seleccionados.
+        ,
+        label: "Selecciona la categoria",
+        value: attributes.SetIds // options={ RetrieveCategories }
+        // options={ MyAuthorsList }
+        // options={
+        // 	[
+        // 		{ label: 'Datex', value: 'date' },
+        // 		{ label: 'Modified', value: 'modified' },
+        // 		{ label: 'Title', value: 'title' },
+        // 		{ label: 'Name', value: 'name' },
+        // 		{ label: 'Author', value: 'author' },
+        // 		{ label: 'Rand', value: 'rand' },
+        // 	]
+        // }
+        ,
+        options: categories.map(function (author) {
+          return {
+            label: author.name,
+            value: author.id
+          };
+        }),
+        onChange: function onChange(newval) {
+          return setAttributes({
+            SetIds: newval
+          });
+        },
+        style: {
+          height: '150px',
+          border: '1px solid red'
+        }
+      });
+    } else {
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null);
+    }
+  };
+
+  var MyAuthorsList = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__["withSelect"])(function (select) {
     return {
-      label: name,
-      value: id
+      authors: select('core').getAuthors(),
+      categories: select('core').getEntityRecords('taxonomy', 'category', {
+        per_page: -1
+      })
     };
-  });
+  })(MyAuthorsListBase);
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Contenido de carrusel",
     initialOpen: true
@@ -300,21 +363,7 @@ function Edit(props) {
         ChooseType: ChooseType
       });
     }
-  }), 'posts' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
-    multiple: true // multiples valores seleccionados.
-    ,
-    label: "Selecciona la categoria",
-    value: attributes.SetIds,
-    options: RetrieveCategories,
-    onChange: function onChange(newval) {
-      return setAttributes({
-        SetIds: newval
-      });
-    },
-    style: {
-      height: '150px'
-    }
-  }), 'images' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(MyAuthorsList, null), 'images' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Ekiline Carousel: Seleccionar imagenes'),
     onSelect: function onSelect(media) {
       var img_ids = [];
@@ -353,7 +402,7 @@ function Edit(props) {
     label: "Organizar por:",
     value: attributes.SetOrderBy,
     options: [{
-      label: 'Date',
+      label: 'Datex',
       value: 'date'
     }, {
       label: 'Modified',

@@ -64,6 +64,21 @@ function setClassName() {
  * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
  * @ref https://developer.wordpress.org/block-editor/components/select-control/
  * Finalmente solo se requiere inicializar el metodo.
+ *
+ * Actualizacion:
+ * Para incorporar datos dinamicos, se ocupa withSelect, que es un comoponente de wp.
+ * Hicimos varios experimentos y requiere al menos incorporar un IF ya que la carga de estos datos,
+ * puede crear un conflicto con otros plugins.
+ * 
+ * ejemplo withSelect.
+ * @ref https://developer.wordpress.org/block-editor/packages/packages-core-data/
+ * uso de rest api
+ * @ref https://developer.wordpress.org/rest-api/reference/
+ * @ref https://developer.wordpress.org/rest-api/reference/categories/
+ * crear un componente e incorporar despues con dudas
+ * @ref https://wpdev.life/using-withselect-for-wordpress-block-components/
+ * @ref https://github.com/WordPress/gutenberg/issues/14064
+ * @ref https://css-tricks.com/managing-wordpress-metadata-in-gutenberg-using-a-sidebar-plugin/
  */
 // wp.data
 // 	.select( 'core' )
@@ -71,8 +86,7 @@ function setClassName() {
 
 // Nueva prueba, corregir la obtencion de datos.
 
-
-
+import { withSelect } from '@wordpress/data';
 
 /**
  * Componente de imagenes
@@ -91,10 +105,53 @@ function setClassName() {
 export default function Edit( props ) {
 	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
 	const boxClass = setClassName();
-	const RetrieveCategories = wp.data
-		.select( 'core' )
-		.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } )
-		.map( ( { id, name } ) => ( { label: name, value: id } ) );
+	// const RetrieveCategories = wp.data
+	// 	.select( 'core' )
+	// 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } )
+	// 	.map( ( { id, name } ) => ( { label: name, value: id } ) );
+
+	const MyAuthorsListBase = ( { authors, categories } ) => {
+
+		if ( categories ){
+
+			return (
+				<SelectControl
+					multiple // multiples valores seleccionados.
+					label="Selecciona la categoria"
+					value={ attributes.SetIds }
+						// options={ RetrieveCategories }
+						// options={ MyAuthorsList }
+						// options={
+						// 	[
+						// 		{ label: 'Datex', value: 'date' },
+						// 		{ label: 'Modified', value: 'modified' },
+						// 		{ label: 'Title', value: 'title' },
+						// 		{ label: 'Name', value: 'name' },
+						// 		{ label: 'Author', value: 'author' },
+						// 		{ label: 'Rand', value: 'rand' },
+						// 	]
+						// }
+					options={ categories.map( ( author ) => (
+						{ label: author.name, value: author.id }
+					) ) }
+					onChange={ ( newval ) =>
+						setAttributes( { SetIds: newval } )
+					}
+					style={ { height: '150px', border:'1px solid red' } }
+				/>
+			);
+
+		} else {
+			return (
+				<></>
+			)
+		}
+	}
+	
+	const MyAuthorsList = withSelect( ( select ) => ( {
+		authors: select( 'core' ).getAuthors(),
+		categories: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ),
+	} ) )( MyAuthorsListBase );	
 
 	return (
 		<div { ...blockProps }>
@@ -113,19 +170,22 @@ export default function Edit( props ) {
 						}
 					/>
 
+					<MyAuthorsList/>
+
 					{ /* Selector de categorias o insertar imagenes */ }
-					{ 'posts' === attributes.ChooseType && (
+					{/* { 'posts' === attributes.ChooseType && (
 						<SelectControl
 							multiple // multiples valores seleccionados.
 							label="Selecciona la categoria"
 							value={ attributes.SetIds }
-							options={ RetrieveCategories }
+							// options={ RetrieveCategories }
+							options={ MyAuthorsList }
 							onChange={ ( newval ) =>
 								setAttributes( { SetIds: newval } )
 							}
 							style={ { height: '150px' } }
 						/>
-					) }
+					) } */}
 
 					{ 'images' === attributes.ChooseType && (
 						<MediaUploadCheck>
@@ -178,7 +238,7 @@ export default function Edit( props ) {
 							label="Organizar por:"
 							value={ attributes.SetOrderBy }
 							options={ [
-								{ label: 'Date', value: 'date' },
+								{ label: 'Datex', value: 'date' },
 								{ label: 'Modified', value: 'modified' },
 								{ label: 'Title', value: 'title' },
 								{ label: 'Name', value: 'name' },
