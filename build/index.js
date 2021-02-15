@@ -188,12 +188,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_6__);
 
 
 /**
@@ -209,6 +209,36 @@ __webpack_require__.r(__webpack_exports__);
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
 
+
+
+/**
+ * Componente para ocupar las categorias.
+ * Existen varios ejercicios.
+ * @ref https://wordpress.stackexchange.com/questions/372134/gutenberg-block-get-categories-in-selectcontrol
+ * @ref https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
+ * @ref https://wordpress.stackexchange.com/questions/319035/how-would-i-get-a-taxonomy-category-list-inside-a-gutenberg-block
+ * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
+ * @ref https://developer.wordpress.org/block-editor/components/select-control/
+ *
+ * Hacer uso de esta sintaxis no es correcto para crear un control.
+ * wp.data.select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ).map( ( { id, name } ) => ( { label: name, value: id } ) );
+ *
+ * Actualizacion:
+ * Para incorporar datos dinamicos, se ocupa withSelect, que es un comoponente de wp.
+ * Hicimos varios experimentos y requiere al menos incorporar un IF ya que la carga de estos datos,
+ * puede crear un conflicto con otros plugins.
+ *
+ * ejemplo withSelect.
+ * @ref https://developer.wordpress.org/block-editor/packages/packages-core-data/
+ * uso de rest api
+ * @ref https://developer.wordpress.org/rest-api/reference/
+ * @ref https://developer.wordpress.org/rest-api/reference/categories/
+ * crear un componente e incorporar despues con dudas
+ * @ref https://wpdev.life/using-withselect-for-wordpress-block-components/
+ * @ref https://github.com/WordPress/gutenberg/issues/14064
+ * @ref https://css-tricks.com/managing-wordpress-metadata-in-gutenberg-using-a-sidebar-plugin/
+ */
+// Nueva prueba, corregir la obtencion de datos.
 
 
 /**
@@ -232,43 +262,11 @@ __webpack_require__.r(__webpack_exports__);
  * @return {name} clase de apoyo para manipular el item con js del tema.
  */
 
-function setClassName() {
+var setClassName = function setClassName() {
   var rand = Math.floor(Math.random() * 100) + 1,
       name = 'ekiline-box-' + rand + '-wrapper';
   return name;
-}
-/**
- * Componente para ocupar las categorias.
- * Existen varios ejercicios.
- * @ref https://wordpress.stackexchange.com/questions/372134/gutenberg-block-get-categories-in-selectcontrol
- * @ref https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
- * @ref https://wordpress.stackexchange.com/questions/319035/how-would-i-get-a-taxonomy-category-list-inside-a-gutenberg-block
- * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
- * @ref https://developer.wordpress.org/block-editor/components/select-control/
- * Finalmente solo se requiere inicializar el metodo.
- *
- * Actualizacion:
- * Para incorporar datos dinamicos, se ocupa withSelect, que es un comoponente de wp.
- * Hicimos varios experimentos y requiere al menos incorporar un IF ya que la carga de estos datos,
- * puede crear un conflicto con otros plugins.
- * 
- * ejemplo withSelect.
- * @ref https://developer.wordpress.org/block-editor/packages/packages-core-data/
- * uso de rest api
- * @ref https://developer.wordpress.org/rest-api/reference/
- * @ref https://developer.wordpress.org/rest-api/reference/categories/
- * crear un componente e incorporar despues con dudas
- * @ref https://wpdev.life/using-withselect-for-wordpress-block-components/
- * @ref https://github.com/WordPress/gutenberg/issues/14064
- * @ref https://css-tricks.com/managing-wordpress-metadata-in-gutenberg-using-a-sidebar-plugin/
- */
-// wp.data
-// 	.select( 'core' )
-// 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } );
-// Nueva prueba, corregir la obtencion de datos.
-
-
-
+};
 /**
  * Componente de imagenes
  * Requiere: Button, MediaUpload, MediaUploadCheck
@@ -284,42 +282,27 @@ function setClassName() {
  * @return {WPElement} Element to render.
  */
 
+
 function Edit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes,
       _props$blockProps = props.blockProps,
       blockProps = _props$blockProps === void 0 ? Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])() : _props$blockProps;
-  var boxClass = setClassName(); // const RetrieveCategories = wp.data
-  // 	.select( 'core' )
-  // 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } )
-  // 	.map( ( { id, name } ) => ( { label: name, value: id } ) );
+  var boxClass = setClassName(); // revisar como crear este componente fuera de la fucncion principal.
 
-  var MyAuthorsListBase = function MyAuthorsListBase(_ref) {
-    var authors = _ref.authors,
-        categories = _ref.categories;
+  var MyCategoryListBase = function MyCategoryListBase(_ref) {
+    var categories = _ref.categories;
 
     if (categories) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
         multiple: true // multiples valores seleccionados.
         ,
         label: "Selecciona la categoria",
-        value: attributes.SetIds // options={ RetrieveCategories }
-        // options={ MyAuthorsList }
-        // options={
-        // 	[
-        // 		{ label: 'Datex', value: 'date' },
-        // 		{ label: 'Modified', value: 'modified' },
-        // 		{ label: 'Title', value: 'title' },
-        // 		{ label: 'Name', value: 'name' },
-        // 		{ label: 'Author', value: 'author' },
-        // 		{ label: 'Rand', value: 'rand' },
-        // 	]
-        // }
-        ,
-        options: categories.map(function (author) {
+        value: attributes.SetIds,
+        options: categories.map(function (category) {
           return {
-            label: author.name,
-            value: author.id
+            label: category.name,
+            value: category.id
           };
         }),
         onChange: function onChange(newval) {
@@ -337,14 +320,13 @@ function Edit(props) {
     }
   };
 
-  var MyAuthorsList = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__["withSelect"])(function (select) {
+  var MyCategorySelect = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__["withSelect"])(function (select) {
     return {
-      authors: select('core').getAuthors(),
       categories: select('core').getEntityRecords('taxonomy', 'category', {
         per_page: -1
       })
     };
-  })(MyAuthorsListBase);
+  })(MyCategoryListBase);
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Contenido de carrusel",
     initialOpen: true
@@ -363,7 +345,7 @@ function Edit(props) {
         ChooseType: ChooseType
       });
     }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(MyAuthorsList, null), 'images' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
+  }), 'posts' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(MyCategorySelect, null), 'images' === attributes.ChooseType && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Ekiline Carousel: Seleccionar imagenes'),
     onSelect: function onSelect(media) {
       var img_ids = [];
@@ -532,7 +514,7 @@ function Edit(props) {
     }
   }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: boxClass
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default.a, {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_5___default.a, {
     block: "ekiline-blocks/ekiline-carousel",
     attributes: props.attributes
   }))));

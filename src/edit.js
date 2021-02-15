@@ -30,6 +30,37 @@ import {
 } from '@wordpress/components';
 
 /**
+ * Componente para ocupar las categorias.
+ * Existen varios ejercicios.
+ * @ref https://wordpress.stackexchange.com/questions/372134/gutenberg-block-get-categories-in-selectcontrol
+ * @ref https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
+ * @ref https://wordpress.stackexchange.com/questions/319035/how-would-i-get-a-taxonomy-category-list-inside-a-gutenberg-block
+ * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
+ * @ref https://developer.wordpress.org/block-editor/components/select-control/
+ *
+ * Hacer uso de esta sintaxis no es correcto para crear un control.
+ * wp.data.select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ).map( ( { id, name } ) => ( { label: name, value: id } ) );
+ *
+ * Actualizacion:
+ * Para incorporar datos dinamicos, se ocupa withSelect, que es un comoponente de wp.
+ * Hicimos varios experimentos y requiere al menos incorporar un IF ya que la carga de estos datos,
+ * puede crear un conflicto con otros plugins.
+ *
+ * ejemplo withSelect.
+ * @ref https://developer.wordpress.org/block-editor/packages/packages-core-data/
+ * uso de rest api
+ * @ref https://developer.wordpress.org/rest-api/reference/
+ * @ref https://developer.wordpress.org/rest-api/reference/categories/
+ * crear un componente e incorporar despues con dudas
+ * @ref https://wpdev.life/using-withselect-for-wordpress-block-components/
+ * @ref https://github.com/WordPress/gutenberg/issues/14064
+ * @ref https://css-tricks.com/managing-wordpress-metadata-in-gutenberg-using-a-sidebar-plugin/
+ */
+
+// Nueva prueba, corregir la obtencion de datos.
+import { withSelect } from '@wordpress/data';
+
+/**
  * Auxiliar, visualizar con php.
  * https://developer.wordpress.org/block-editor/tutorials/block-tutorial/creating-dynamic-blocks/
  */
@@ -49,44 +80,11 @@ import './editor.scss';
  * Classname dinamica para el envoltorio del carrusel.
  * @return {name} clase de apoyo para manipular el item con js del tema.
  */
-function setClassName() {
-	const rand = Math.floor( Math.random() * 100 ) + 1,
+const setClassName = () => {
+	var rand = Math.floor( Math.random() * 100 ) + 1,
 		name = 'ekiline-box-' + rand + '-wrapper';
 	return name;
 }
-
-/**
- * Componente para ocupar las categorias.
- * Existen varios ejercicios.
- * @ref https://wordpress.stackexchange.com/questions/372134/gutenberg-block-get-categories-in-selectcontrol
- * @ref https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
- * @ref https://wordpress.stackexchange.com/questions/319035/how-would-i-get-a-taxonomy-category-list-inside-a-gutenberg-block
- * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
- * @ref https://developer.wordpress.org/block-editor/components/select-control/
- * Finalmente solo se requiere inicializar el metodo.
- *
- * Actualizacion:
- * Para incorporar datos dinamicos, se ocupa withSelect, que es un comoponente de wp.
- * Hicimos varios experimentos y requiere al menos incorporar un IF ya que la carga de estos datos,
- * puede crear un conflicto con otros plugins.
- * 
- * ejemplo withSelect.
- * @ref https://developer.wordpress.org/block-editor/packages/packages-core-data/
- * uso de rest api
- * @ref https://developer.wordpress.org/rest-api/reference/
- * @ref https://developer.wordpress.org/rest-api/reference/categories/
- * crear un componente e incorporar despues con dudas
- * @ref https://wpdev.life/using-withselect-for-wordpress-block-components/
- * @ref https://github.com/WordPress/gutenberg/issues/14064
- * @ref https://css-tricks.com/managing-wordpress-metadata-in-gutenberg-using-a-sidebar-plugin/
- */
-// wp.data
-// 	.select( 'core' )
-// 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } );
-
-// Nueva prueba, corregir la obtencion de datos.
-
-import { withSelect } from '@wordpress/data';
 
 /**
  * Componente de imagenes
@@ -105,34 +103,17 @@ import { withSelect } from '@wordpress/data';
 export default function Edit( props ) {
 	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
 	const boxClass = setClassName();
-	// const RetrieveCategories = wp.data
-	// 	.select( 'core' )
-	// 	.getEntityRecords( 'taxonomy', 'category', { per_page: -1 } )
-	// 	.map( ( { id, name } ) => ( { label: name, value: id } ) );
 
-	const MyAuthorsListBase = ( { authors, categories } ) => {
-
+	// revisar como crear este componente fuera de la fucncion principal.
+	const MyCategoryListBase = ( { categories } ) => {
 		if ( categories ){
-
 			return (
 				<SelectControl
 					multiple // multiples valores seleccionados.
 					label="Selecciona la categoria"
 					value={ attributes.SetIds }
-						// options={ RetrieveCategories }
-						// options={ MyAuthorsList }
-						// options={
-						// 	[
-						// 		{ label: 'Datex', value: 'date' },
-						// 		{ label: 'Modified', value: 'modified' },
-						// 		{ label: 'Title', value: 'title' },
-						// 		{ label: 'Name', value: 'name' },
-						// 		{ label: 'Author', value: 'author' },
-						// 		{ label: 'Rand', value: 'rand' },
-						// 	]
-						// }
-					options={ categories.map( ( author ) => (
-						{ label: author.name, value: author.id }
+					options={ categories.map( ( category ) => (
+						{ label: category.name, value: category.id }
 					) ) }
 					onChange={ ( newval ) =>
 						setAttributes( { SetIds: newval } )
@@ -147,11 +128,10 @@ export default function Edit( props ) {
 			)
 		}
 	}
-	
-	const MyAuthorsList = withSelect( ( select ) => ( {
-		authors: select( 'core' ).getAuthors(),
+
+	const MyCategorySelect = withSelect( ( select ) => ( {
 		categories: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ),
-	} ) )( MyAuthorsListBase );	
+	} ) )( MyCategoryListBase );
 
 	return (
 		<div { ...blockProps }>
@@ -170,22 +150,11 @@ export default function Edit( props ) {
 						}
 					/>
 
-					<MyAuthorsList/>
-
 					{ /* Selector de categorias o insertar imagenes */ }
-					{/* { 'posts' === attributes.ChooseType && (
-						<SelectControl
-							multiple // multiples valores seleccionados.
-							label="Selecciona la categoria"
-							value={ attributes.SetIds }
-							// options={ RetrieveCategories }
-							options={ MyAuthorsList }
-							onChange={ ( newval ) =>
-								setAttributes( { SetIds: newval } )
-							}
-							style={ { height: '150px' } }
-						/>
-					) } */}
+
+					{ 'posts' === attributes.ChooseType && (
+						<MyCategorySelect/>
+					)}
 
 					{ 'images' === attributes.ChooseType && (
 						<MediaUploadCheck>
