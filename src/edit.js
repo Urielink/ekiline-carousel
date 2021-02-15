@@ -120,8 +120,7 @@ export default function Edit( props ) {
 					}
 					style={ { height: '150px', border:'1px solid red' } }
 				/>
-			);
-
+			)
 		} else {
 			return (
 				<></>
