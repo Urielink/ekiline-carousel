@@ -206,7 +206,7 @@ export default function Edit( props ) {
 							label="Organizar por:"
 							value={ attributes.SetOrderBy }
 							options={ [
-								{ label: 'Datex', value: 'date' },
+								{ label: 'Date', value: 'date' },
 								{ label: 'Modified', value: 'modified' },
 								{ label: 'Title', value: 'title' },
 								{ label: 'Name', value: 'name' },

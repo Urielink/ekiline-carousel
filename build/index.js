@@ -384,7 +384,7 @@ function Edit(props) {
     label: "Organizar por:",
     value: attributes.SetOrderBy,
     options: [{
-      label: 'Datex',
+      label: 'Date',
       value: 'date'
     }, {
       label: 'Modified',
