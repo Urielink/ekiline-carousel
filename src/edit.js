@@ -1,16 +1,5 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
+import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	InspectorControls,
@@ -28,88 +17,24 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
-
-/**
- * Componente para ocupar las categorias.
- * Existen varios ejercicios.
- * @ref https://wordpress.stackexchange.com/questions/372134/gutenberg-block-get-categories-in-selectcontrol
- * @ref https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
- * @ref https://wordpress.stackexchange.com/questions/319035/how-would-i-get-a-taxonomy-category-list-inside-a-gutenberg-block
- * @ref https://github.com/WordPress/gutenberg/blob/b7ad77d15f32ca234ff2f3df4994e47a5cf2e6d7/packages/editor/src/components/page-attributes/README.md
- * @ref https://developer.wordpress.org/block-editor/components/select-control/
- *
- * Hacer uso de esta sintaxis no es correcto para crear un control.
- * wp.data.select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ).map( ( { id, name } ) => ( { label: name, value: id } ) );
- *
- * Actualizacion:
- * Para incorporar datos dinamicos, se ocupa withSelect, que es un comoponente de wp.
- * Hicimos varios experimentos y requiere al menos incorporar un IF ya que la carga de estos datos,
- * puede crear un conflicto con otros plugins.
- *
- * ejemplo withSelect.
- * @ref https://developer.wordpress.org/block-editor/packages/packages-core-data/
- * uso de rest api
- * @ref https://developer.wordpress.org/rest-api/reference/
- * @ref https://developer.wordpress.org/rest-api/reference/categories/
- * crear un componente e incorporar despues con dudas
- * @ref https://wpdev.life/using-withselect-for-wordpress-block-components/
- * @ref https://github.com/WordPress/gutenberg/issues/14064
- * @ref https://css-tricks.com/managing-wordpress-metadata-in-gutenberg-using-a-sidebar-plugin/
- */
-
-// Nueva prueba, corregir la obtencion de datos.
+import ServerSideRender from '@wordpress/server-side-render';
+import './editor.scss';
 import { withSelect } from '@wordpress/data';
 
-/**
- * Auxiliar, visualizar con php.
- * https://developer.wordpress.org/block-editor/tutorials/block-tutorial/creating-dynamic-blocks/
- */
-import ServerSideRender from '@wordpress/server-side-render';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss';
-
-/**
- * Funciones propias
- *
- * Classname dinamica para el envoltorio del carrusel.
- * @return {name} clase de apoyo para manipular el item con js del tema.
- */
 const setClassName = () => {
 	var rand = Math.floor( Math.random() * 100 ) + 1,
 		name = 'ekiline-box-' + rand + '-wrapper';
 	return name;
 }
 
-/**
- * Componente de imagenes
- * Requiere: Button, MediaUpload, MediaUploadCheck
- * @ref https://github.com/WordPress/gutenberg/tree/master/packages/block-editor/src/components/media-upload;
- */
-
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @return {WPElement} Element to render.
- */
-export default function Edit( props ) {
+export default function Edit(props) {
 	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
 	const boxClass = setClassName();
-
-	// Componente dinamico: categorias.
 	const MyCategoryList = ( { categories } ) => {
 		if ( categories ){
 			return (
 				<SelectControl
-					multiple // multiples valores seleccionados.
+					multiple
 					label="Selecciona la categoria"
 					value={ attributes.SetIds }
 					options={ categories.map( ( category ) => (
@@ -133,10 +58,10 @@ export default function Edit( props ) {
 	} ) )( MyCategoryList );
 
 	return (
-		<div { ...blockProps }>
+		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title="Contenido de carrusel" initialOpen={ true }>
-					{ /* Atributos OK */ }
+
 					<SelectControl
 						label="Tipo de contenido"
 						value={ attributes.ChooseType }
@@ -148,8 +73,6 @@ export default function Edit( props ) {
 							setAttributes( { ChooseType } )
 						}
 					/>
-
-					{ /* Selector de categorias o insertar imagenes */ }
 
 					{ 'posts' === attributes.ChooseType && (
 						<MyCategorySelect/>
@@ -186,12 +109,11 @@ export default function Edit( props ) {
 						</MediaUploadCheck>
 					) }
 
-					{ /* Mostrar solo cuando sean posts */ }
 					{ 'posts' === attributes.ChooseType && (
 						<TextControl
 							label={ __( '¿Cuantas publicaciones?', 'ekiline' ) }
 							type="number"
-							value={ attributes.SetAmount } // variable
+							value={ attributes.SetAmount }
 							onChange={ ( newval ) =>
 								setAttributes( {
 									SetAmount: parseInt( newval ),
@@ -200,7 +122,6 @@ export default function Edit( props ) {
 						/>
 					) }
 
-					{ /* Mostrar solo cuando sean posts */ }
 					{ 'posts' === attributes.ChooseType && (
 						<SelectControl
 							label="Organizar por:"
@@ -219,12 +140,6 @@ export default function Edit( props ) {
 						/>
 					) }
 
-					{ /**
-					 * Buscar bloques existentes.
-					 * https://developer.wordpress.org/reference/functions/get_dynamic_block_names/
-					 */ }
-
-					{ /* Mostrar solo cuando sean posts */ }
 					{ 'posts' === attributes.ChooseType && (
 						<SelectControl
 							label={ __(
@@ -248,7 +163,6 @@ export default function Edit( props ) {
 						/>
 					) }
 
-					{ /* Mostrar solo cuando el bloque es buscado */ }
 					{ 'none' !== attributes.FindBlock && (
 						<ToggleControl
 							label={ __(
@@ -266,7 +180,7 @@ export default function Edit( props ) {
 				<PanelBody title="Vista de carrusel" initialOpen={ false }>
 					<RangeControl
 						label={ __( 'Columnas', 'ekiline' ) }
-						value={ attributes.SetColumns } // variable
+						value={ attributes.SetColumns }
 						onChange={ ( newval ) =>
 							setAttributes( { SetColumns: parseInt( newval ) } )
 						}
@@ -299,7 +213,7 @@ export default function Edit( props ) {
 					<TextControl
 						label={ __( 'Transición en milisegundos', 'ekiline' ) }
 						type="number"
-						value={ attributes.SetTime } // variable
+						value={ attributes.SetTime }
 						onChange={ ( newval ) =>
 							setAttributes( { SetTime: parseInt( newval ) } )
 						}
@@ -320,10 +234,6 @@ export default function Edit( props ) {
 				</PanelBody>
 			</InspectorControls>
 
-			{ /**
-			 * Agregar un boton al control de bloque
-			 * https://developer.wordpress.org/block-editor/components/toolbar-item/
-			 * */ }
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarItem
@@ -339,10 +249,6 @@ export default function Edit( props ) {
 				</ToolbarGroup>
 			</BlockControls>
 
-			{ /**
-			 * Un div intermedio entre bloque y delimitador aparentemente
-			 * detiene la sobreejecucion de boxClass por is-hovered.
-			 */ }
 			<div className={ boxClass }>
 				<div>
 					<ServerSideRender
@@ -351,6 +257,8 @@ export default function Edit( props ) {
 					/>
 				</div>
 			</div>
+
+
 		</div>
 	);
 }

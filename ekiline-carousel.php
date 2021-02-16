@@ -34,6 +34,7 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 		$script_asset['dependencies'],
 		$script_asset['version']
 	);
+
 	wp_set_script_translations( 'ekiline-blocks-ekiline-carousel-block-editor', 'ekiline-carousel' );
 
 	$editor_css = 'build/index.css';
@@ -52,81 +53,75 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
-	register_block_type( 'ekiline-blocks/ekiline-carousel', array(
-		'editor_script' => 'ekiline-blocks-ekiline-carousel-block-editor',
-		'editor_style'  => 'ekiline-blocks-ekiline-carousel-block-editor',
-		'style'         => 'ekiline-blocks-ekiline-carousel-block',
-		// Render call back crea el objeto en el front.
-		'render_callback' => 'gutenberg_examples_dynamic_render_callback',
-		// Se agreagn los atributos para el renderizado.
-		'attributes' => [
-			// toolbar
-			'align' => [
-				'type' => 'string',
-				'default' => '',
-			],
-			// panel
-			'ChooseType' => [
-				'type' => 'string',
-				'default' => 'posts',
-			],
-			'SetIds' => [
-				'type' => 'array', // multiples valores seleccionados.
-				'default' => '',
-			],
-			'SetAmount' => [
-				'type' => 'number',
-				'default' => 3,
-			],
-			'SetOrderBy' => [
-				'type' => 'string',
-				'default' => 'date',
-			],
-			'SetColumns' => [
-				'type' => 'number',
-				'default' => 1,
-			],
-			'FindBlock' => [
-				'type' => 'string',
-				'default' => 'none',
-			],
-			'AllowMixed' => [
-				'type' => 'boolean',
-				'default' => false,
-			],
-			'AddControls' => [
-				'type' => 'boolean',
-				'default' => true,
-			],
-			'AddIndicators' => [
-				'type' => 'boolean',
-				'default' => true,
-			],
-			'SetAuto' => [
-				'type' => 'boolean',
-				'default' => true,
-			],
-			'SetTime' => [
-				'type' => 'number',
-				'default' => '5000',
-			],
-			'SetAnimation' => [
-				'type' => 'string',
-				'default' => '',
-			],
-		]
-	) );
+	register_block_type(
+		'ekiline-blocks/ekiline-carousel',
+		array(
+			'apiVersion' => 2,
+			'editor_script' => 'ekiline-blocks-ekiline-carousel-block-editor',
+			'editor_style'  => 'ekiline-blocks-ekiline-carousel-block-editor',
+			'style'         => 'ekiline-blocks-ekiline-carousel-block',
+			'render_callback' => 'gutenberg_examples_dynamic_render_callback',
+			'attributes' => [
+				// toolbar
+				'align' => [
+					'type' => 'string',
+					'default' => '',
+				],
+				// panel
+				'ChooseType' => [
+					'type' => 'string',
+					'default' => 'posts',
+				],
+				'SetIds' => [
+					'type' => 'array', // multiples valores seleccionados.
+					'default' => '',
+				],
+				'SetAmount' => [
+					'type' => 'number',
+					'default' => 3,
+				],
+				'SetOrderBy' => [
+					'type' => 'string',
+					'default' => 'date',
+				],
+				'SetColumns' => [
+					'type' => 'number',
+					'default' => 1,
+				],
+				'FindBlock' => [
+					'type' => 'string',
+					'default' => 'none',
+				],
+				'AllowMixed' => [
+					'type' => 'boolean',
+					'default' => false,
+				],
+				'AddControls' => [
+					'type' => 'boolean',
+					'default' => true,
+				],
+				'AddIndicators' => [
+					'type' => 'boolean',
+					'default' => true,
+				],
+				'SetAuto' => [
+					'type' => 'boolean',
+					'default' => true,
+				],
+				'SetTime' => [
+					'type' => 'number',
+					'default' => '5000',
+				],
+				'SetAnimation' => [
+					'type' => 'string',
+					'default' => '',
+				],
+			]
+		)
+	);
 }
 add_action( 'init', 'ekiline_blocks_ekiline_carousel_block_init' );
 
-/**
- * Funcion php para muestreo en front
- * Observacion: los bloques dinamicos en el front, se ejecutan sin problema desde un afuncion php.
- * Lo mejor para este caso, es ocupar el ServerRender.
- *
- * Los atributos declarados tanto en el bloque js como en php se consultan con los corchetes.
- * $block_attributes['nombreAtributo']
- */
 function gutenberg_examples_dynamic_render_callback( $block_attributes, $content ) {
 
 	$carousel_args  = '';
@@ -136,7 +131,6 @@ function gutenberg_examples_dynamic_render_callback( $block_attributes, $content
 	}
 
 	if ( $block_attributes['SetIds'] ) {
-		// fue necesario cambiar el tipo de dato a array para permitir seleccionar varias categorias.
 		$array_to_string = implode( ",", $block_attributes['SetIds'] );
 		$carousel_args  .= 'id="' . $array_to_string . '" ';
 	}
